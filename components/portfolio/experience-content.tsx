@@ -2,41 +2,9 @@
 
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
+import { portfolio } from "@/lib/portfolio"
 
-interface Experience {
-  period: string
-  title: string
-  company: string
-  description: string
-  techStack: string[]
-}
-
-const experiences: Experience[] = [
-  {
-    period: "2025 - Present",
-    title: "Junior Software Developer",
-    company: "EduVanceAI",
-    description:
-      "Building intelligent backend systems and AI integrations for an EdTech platform. ML-powered personalization, RAG pipelines, and scalable APIs serving thousands of learners daily.",
-    techStack: ["FastAPI", "Python", "Django", "PostgreSQL", "Docker", "AWS", "GenAI", "React"],
-  },
-  {
-    period: "Jun 2023 – Aug 2023",
-    title: "User Experience Designer",
-    company: "Zepto Digital Labs",
-    description:
-      "Designed UI for a simulation platform and improved user experience through design thinking principles. Delivered research-backed interface improvements that enhanced usability.",
-    techStack: ["Figma", "UX Research", "Design Thinking", "Prototyping"],
-  },
-  {
-    period: "Jun 2023 – Jul 2023",
-    title: "Back End Intern",
-    company: "Laser Technologies Pvt Ltd",
-    description:
-      "Managed and maintained backend systems and databases to support enterprise-level web applications. Ensured uptime, performance, and data integrity across production systems.",
-    techStack: ["Backend", "Databases", "SQL", "Web Applications"],
-  },
-]
+const { experiences } = portfolio
 
 export function ExperienceContent() {
   const { theme } = useTheme()

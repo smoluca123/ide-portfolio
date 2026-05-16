@@ -1,9 +1,13 @@
 "use client"
 
 import { useTheme } from "./theme-context"
-import { Mail, Linkedin, MessageCircle, Github, Send, CheckCircle } from "lucide-react"
+import { Send, CheckCircle } from "lucide-react"
 import { useState } from "react"
 import { withAlpha } from "./themes"
+import { Icon } from "./icon"
+import { portfolio } from "@/lib/portfolio"
+
+const { contact } = portfolio
 
 export function ContactContent() {
   const { theme } = useTheme()
@@ -19,33 +23,6 @@ export function ContactContent() {
     }, 3000)
   }
 
-  const contactMethods = [
-    {
-      icon: <Mail size={24} style={{ color: theme.green }} />,
-      label: "Email",
-      value: "aahana.bobade@example.com",
-      href: "mailto:aahana.bobade@example.com",
-    },
-    {
-      icon: <MessageCircle size={24} style={{ color: theme.accent }} />,
-      label: "Telegram",
-      value: "@aahana_bobade",
-      href: "https://t.me/aahana_bobade",
-    },
-    {
-      icon: <Github size={24} style={{ color: theme.pink }} />,
-      label: "GitHub",
-      value: "github.com/aahana",
-      href: "https://github.com/aahana",
-    },
-    {
-      icon: <Linkedin size={24} style={{ color: theme.orange }} />,
-      label: "LinkedIn",
-      value: "linkedin.com/in/aahana",
-      href: "https://linkedin.com/in/aahana",
-    },
-  ]
-
   const inputStyles: React.CSSProperties = {
     backgroundColor: theme.surface,
     color: theme.foreground,
@@ -59,8 +36,9 @@ export function ContactContent() {
     >
       {/* Comment header */}
       <div className="mb-8 text-sm" style={{ color: theme.comment }}>
-        <div>// contact.css - Let&apos;s connect &amp; collaborate</div>
-        <div>// Always open to interesting projects and discussions</div>
+        {contact.fileBanner.map((line, i) => (
+          <div key={i}>{line}</div>
+        ))}
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">
@@ -153,7 +131,7 @@ export function ContactContent() {
             Other Ways to Connect
           </h2>
           <div className="space-y-3">
-            {contactMethods.map((method) => (
+            {contact.methods.map((method) => (
               <a
                 key={method.label}
                 href={method.href}
@@ -165,7 +143,13 @@ export function ContactContent() {
                   border: `1px solid ${withAlpha(theme.muted, "40")}`,
                 }}
               >
-                <div className="flex-shrink-0">{method.icon}</div>
+                <div className="flex-shrink-0">
+                  <Icon
+                    name={method.icon}
+                    size={24}
+                    style={{ color: theme[method.iconColor] ?? theme.accent }}
+                  />
+                </div>
                 <div>
                   <div className="text-sm font-semibold" style={{ color: theme.foreground }}>
                     {method.label}
@@ -187,8 +171,8 @@ export function ContactContent() {
               color: theme.green,
             }}
           >
-            <div className="mb-1 font-semibold">Response Time</div>
-            <div>I typically respond within 24 hours</div>
+            <div className="mb-1 font-semibold">{contact.responseTime.title}</div>
+            <div>{contact.responseTime.message}</div>
           </div>
         </section>
       </div>

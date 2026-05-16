@@ -1,27 +1,28 @@
 "use client"
 
 import { useTheme } from "./theme-context"
-import { Github, Linkedin, Mail, Globe, BookOpen, Code2 } from "lucide-react"
 import { withAlpha } from "./themes"
+import { Icon } from "./icon"
+import { RichText } from "./rich-text"
+import { portfolio, type ThemeColorKey } from "@/lib/portfolio"
+import { TypeAnimation } from "react-type-animation"
+import { useMemo } from "react"
 
-const socialLinks = [
-  { icon: Github, label: "GitHub", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Globe, label: "Medium", href: "#" },
-  { icon: BookOpen, label: "Tableau", href: "#" },
-  { icon: Code2, label: "LeetCode", href: "#" },
-  { icon: Mail, label: "Email", href: "#" },
-]
-
-const stats = [
-  { value: "3+", label: "YEARS" },
-  { value: "10+", label: "PROJECTS" },
-  { value: "∞", label: "CURIOSITY" },
-  { value: "↑", label: "ALWAYS LEARNING" },
-]
+const { identity, hero, stats, socials } = portfolio
 
 export function HomeContent() {
   const { theme } = useTheme()
+
+  // Build the typing sequence: type each tagline, hold for ~2s, delete, repeat.
+  // `react-type-animation` interleaves strings (to type) and numbers (delays
+  // in ms). Passing an empty string after a delay triggers a backspace clear.
+  const typeSequence = useMemo(() => {
+    const seq: (string | number)[] = []
+    for (const line of hero.taglines) {
+      seq.push(line, 2200, "", 400)
+    }
+    return seq
+  }, [])
 
   return (
     <div
@@ -33,7 +34,7 @@ export function HomeContent() {
         className="mb-8 font-mono text-[13px] italic"
         style={{ color: withAlpha(theme.comment, "cc") }}
       >
-        {"// hello world !! Welcome to my portfolio"}
+        {hero.intro}
       </p>
 
       {/* Hero Name */}
@@ -42,38 +43,64 @@ export function HomeContent() {
           className="font-serif text-[84px] font-extrabold leading-none"
           style={{ color: theme.foreground, letterSpacing: "-0.03em" }}
         >
-          Aahana
+          {identity.firstName}
         </h1>
         <h1
           className="font-serif text-[84px] font-extrabold leading-none"
           style={{ color: theme.pink, letterSpacing: "-0.03em" }}
         >
-          Bobade
+          {identity.lastName}
         </h1>
       </div>
 
       {/* Skills badges */}
       <div className="mb-8 flex flex-wrap gap-3">
-        <Badge color={theme.muted} bg="transparent" border={withAlpha(theme.muted, "4d")}>
-          Backend Engineer
-        </Badge>
-        <Badge color={theme.accent} bg={withAlpha(theme.accent, "1a")} border={withAlpha(theme.accent, "66")}>
-          AI / ML Dev
-        </Badge>
-        <Badge color={theme.green} bg={withAlpha(theme.green, "1a")} border={withAlpha(theme.green, "66")}>
-          Data Scientist
-        </Badge>
-        <Badge color={theme.pink} bg={withAlpha(theme.pink, "1a")} border={withAlpha(theme.pink, "66")}>
-          EduVanceAI
-        </Badge>
+        {hero.badges.map((badge) => {
+          const color = theme[badge.color as ThemeColorKey] ?? theme.muted
+          const isMuted = badge.color === "muted"
+          return (
+            <span
+              key={badge.label}
+              className="rounded-sm border px-3 py-1.5 font-mono text-[11px] font-medium"
+              style={{
+                color,
+                backgroundColor: isMuted ? "transparent" : withAlpha(color, "1a"),
+                borderColor: isMuted
+                  ? withAlpha(color, "4d")
+                  : withAlpha(color, "66"),
+              }}
+            >
+              {badge.label}
+            </span>
+          )
+        })}
       </div>
 
-      {/* Turning text with cursor */}
-      <p className="mb-6 font-mono text-[13px]" style={{ color: theme.muted }}>
-        <span className="font-bold" style={{ color: theme.pink }}>
-          Turning
-        </span>{" "}
-        <span className="animate-pulse" style={{ color: theme.accent }}>
+      {/* Tagline rotator with typing effect */}
+      <p
+        className="mb-6 flex min-h-[1.6em] items-center gap-1 font-mono text-[13px]"
+        style={{ color: theme.muted }}
+      >
+        <TypeAnimation
+          // Re-mount when the palette key changes so the animation restarts
+          // cleanly if the user swaps themes; not strictly necessary but
+          // avoids any chance of a stale style snapshot in dev.
+          key={theme.id}
+          sequence={typeSequence}
+          wrapper="span"
+          speed={55}
+          deletionSpeed={70}
+          repeat={Infinity}
+          cursor={false}
+          className="font-bold"
+          style={{ color: theme.pink, display: "inline-block" }}
+          aria-label="Aahana's rotating tagline"
+        />
+        <span
+          className="animate-pulse"
+          style={{ color: theme.accent }}
+          aria-hidden="true"
+        >
           |
         </span>
       </p>
@@ -83,59 +110,30 @@ export function HomeContent() {
         className="mb-8 max-w-3xl font-mono text-[14px] leading-relaxed"
         style={{ color: theme.muted }}
       >
-        I live at the crossroads of{" "}
-        <span className="font-semibold" style={{ color: theme.accent }}>
-          backend engineering
-        </span>
-        ,{" "}
-        <span className="font-semibold" style={{ color: theme.accent }}>
-          AI/ML
-        </span>
-        , and{" "}
-        <span className="font-semibold" style={{ color: theme.accent }}>
-          data science
-        </span>
-        . I build systems that are genuinely{" "}
-        <span className="font-semibold" style={{ color: theme.cyan }}>
-          intelligent
-        </span>{" "}
-        and{" "}
-        <span className="font-semibold" style={{ color: theme.cyan }}>
-          scalable
-        </span>
-        .
+        <RichText text={hero.description} />
       </p>
 
       {/* Action buttons */}
       <div className="mb-16 flex gap-4">
-        <button
-          className="rounded-sm border px-4 py-2 font-mono text-[12px] font-semibold transition-all"
-          style={{
-            backgroundColor: theme.accent,
-            color: theme.accentForeground,
-            borderColor: withAlpha(theme.accent, "99"),
-          }}
-        >
-          <span>▶</span> Projects
-        </button>
-        <button
-          className="rounded-sm border bg-transparent px-4 py-2 font-mono text-[12px] font-semibold transition-all hover:opacity-80"
-          style={{
-            color: theme.muted,
-            borderColor: withAlpha(theme.muted, "4d"),
-          }}
-        >
-          <span style={{ marginRight: "6px" }}>ℹ</span> About Me
-        </button>
-        <button
-          className="rounded-sm border bg-transparent px-4 py-2 font-mono text-[12px] font-semibold transition-all hover:opacity-80"
-          style={{
-            color: theme.muted,
-            borderColor: withAlpha(theme.muted, "4d"),
-          }}
-        >
-          <span style={{ marginRight: "6px" }}>✉</span> Contact
-        </button>
+        {hero.ctas.map((cta) => {
+          const isPrimary = cta.variant === "primary"
+          return (
+            <button
+              key={cta.label}
+              className="flex items-center gap-2 rounded-sm border px-4 py-2 font-mono text-[12px] font-semibold transition-all hover:opacity-90"
+              style={{
+                backgroundColor: isPrimary ? theme.accent : "transparent",
+                color: isPrimary ? theme.accentForeground : theme.muted,
+                borderColor: isPrimary
+                  ? withAlpha(theme.accent, "99")
+                  : withAlpha(theme.muted, "4d"),
+              }}
+            >
+              <Icon name={cta.icon} size={14} />
+              <span>{cta.label}</span>
+            </button>
+          )
+        })}
       </div>
 
       {/* Stats grid */}
@@ -166,46 +164,22 @@ export function HomeContent() {
 
       {/* Social links */}
       <div className="flex gap-3">
-        {socialLinks.map((link) => {
-          const Icon = link.icon
-          return (
-            <a
-              key={link.label}
-              href={link.href}
-              title={link.label}
-              className="rounded-sm border p-2.5 transition-all hover:opacity-80"
-              style={{
-                backgroundColor: withAlpha(theme.surface, "80"),
-                borderColor: theme.border,
-                color: theme.subtle,
-              }}
-            >
-              <Icon size={16} />
-            </a>
-          )
-        })}
+        {socials.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            title={link.label}
+            className="rounded-sm border p-2.5 transition-all hover:opacity-80"
+            style={{
+              backgroundColor: withAlpha(theme.surface, "80"),
+              borderColor: theme.border,
+              color: theme.subtle,
+            }}
+          >
+            <Icon name={link.icon} size={16} />
+          </a>
+        ))}
       </div>
     </div>
-  )
-}
-
-function Badge({
-  children,
-  color,
-  bg,
-  border,
-}: {
-  children: React.ReactNode
-  color: string
-  bg: string
-  border: string
-}) {
-  return (
-    <span
-      className="rounded-sm border px-3 py-1.5 font-mono text-[11px] font-medium"
-      style={{ color, backgroundColor: bg, borderColor: border }}
-    >
-      {children}
-    </span>
   )
 }

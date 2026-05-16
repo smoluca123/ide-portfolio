@@ -1,8 +1,12 @@
 "use client"
 
 import { useTheme } from "./theme-context"
-import { Code2, Coffee, Guitar } from "lucide-react"
 import { withAlpha } from "./themes"
+import { Icon } from "./icon"
+import { RichText } from "./rich-text"
+import { portfolio } from "@/lib/portfolio"
+
+const { about } = portfolio
 
 export function AboutContent() {
   const { theme } = useTheme()
@@ -14,8 +18,9 @@ export function AboutContent() {
     >
       {/* Comment header */}
       <div className="mb-8 text-sm" style={{ color: theme.comment }}>
-        <div>// about.html - Aahana&apos;s Professional &amp; Personal Story</div>
-        <div>// Fullstack Developer | Problem Solver | Coffee &amp; Code Enthusiast</div>
+        {about.fileBanner.map((line, i) => (
+          <div key={i}>{line}</div>
+        ))}
       </div>
 
       <div className="space-y-8">
@@ -25,19 +30,11 @@ export function AboutContent() {
             Professional Summary
           </h2>
           <div className="space-y-3 text-sm leading-relaxed" style={{ color: theme.muted }}>
-            <p>
-              I&apos;m a <span style={{ color: theme.accent }}>fullstack developer</span> with{" "}
-              <span style={{ color: theme.accent }}>3+ years</span> of experience building
-              high-performance web applications. My expertise spans from crafting seamless user
-              interfaces to architecting scalable backend systems.
-            </p>
-            <p>
-              Specializing in <span style={{ color: theme.accent }}>Next.js</span>,{" "}
-              <span style={{ color: theme.accent }}>React</span>, and{" "}
-              <span style={{ color: theme.accent }}>PostgreSQL</span>, I focus on technical SEO
-              optimization and delivering products that prioritize user experience. I believe great
-              software solves real problems elegantly.
-            </p>
+            {about.professionalSummary.map((paragraph, i) => (
+              <p key={i}>
+                <RichText text={paragraph} semibold={false} />
+              </p>
+            ))}
           </div>
         </section>
 
@@ -47,32 +44,14 @@ export function AboutContent() {
             Key Milestones
           </h2>
           <ul className="space-y-3 text-sm" style={{ color: theme.muted }}>
-            {[
-              <>
-                Developed <span style={{ color: theme.accent }}>Ling&apos;s Home</span> - A
-                comprehensive digital service management platform that streamlined operations for
-                100+ businesses
-              </>,
-              <>
-                Mastered <span style={{ color: theme.accent }}>technical SEO</span> and{" "}
-                <span style={{ color: theme.accent }}>performance optimization</span>, improving
-                page load times by 60% on average
-              </>,
-              <>
-                Built <span style={{ color: theme.accent }}>AI-powered features</span> and{" "}
-                <span style={{ color: theme.accent }}>ML integrations</span> as part of EdTech
-                solutions
-              </>,
-              <>
-                Contributed to <span style={{ color: theme.accent }}>10+ production projects</span>{" "}
-                across e-commerce, SaaS, and education sectors
-              </>,
-            ].map((item, idx) => (
+            {about.milestones.map((item, idx) => (
               <li key={idx} className="flex items-start gap-3">
                 <span style={{ color: theme.accent }} className="mt-1">
                   ›
                 </span>
-                <span>{item}</span>
+                <span>
+                  <RichText text={item} semibold={false} />
+                </span>
               </li>
             ))}
           </ul>
@@ -84,21 +63,22 @@ export function AboutContent() {
             Beyond the Code
           </h2>
           <div className="grid gap-4 md:grid-cols-3">
-            {[
-              { icon: Code2, title: "Coding", desc: "Exploring new technologies and open-source contributions" },
-              { icon: Coffee, title: "Coffee", desc: "My fuel for debugging, thinking, and solving problems" },
-              { icon: Guitar, title: "Guitar", desc: "Balancing technical precision with creative expression" },
-            ].map(({ icon: Icon, title, desc }) => (
+            {about.interests.map((item) => (
               <div
-                key={title}
+                key={item.title}
                 className="flex items-start gap-3 rounded-md border p-3"
                 style={{ borderColor: withAlpha(theme.muted, "40") }}
               >
-                <Icon size={20} style={{ color: theme.accent }} className="mt-1 flex-shrink-0" />
+                <Icon
+                  name={item.icon}
+                  size={20}
+                  style={{ color: theme.accent }}
+                  className="mt-1 flex-shrink-0"
+                />
                 <div>
-                  <div className="font-semibold">{title}</div>
+                  <div className="font-semibold">{item.title}</div>
                   <div className="text-xs" style={{ color: theme.muted }}>
-                    {desc}
+                    {item.description}
                   </div>
                 </div>
               </div>
@@ -116,11 +96,7 @@ export function AboutContent() {
             style={{ borderColor: theme.accent, borderLeftColor: theme.accent }}
           >
             <p className="text-sm" style={{ color: theme.muted }}>
-              &quot;Great software is built on three pillars:{" "}
-              <span style={{ color: theme.accent }}>clean code</span>,{" "}
-              <span style={{ color: theme.accent }}>user empathy</span>, and{" "}
-              <span style={{ color: theme.accent }}>continuous learning</span>. I strive to create
-              products that are not just functional, but truly delightful to use.&quot;
+              &quot;<RichText text={about.philosophy} semibold={false} />&quot;
             </p>
           </div>
         </section>

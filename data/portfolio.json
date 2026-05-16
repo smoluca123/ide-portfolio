@@ -1,0 +1,278 @@
+{
+  "identity": {
+    "firstName": "Luca",
+    "lastName": "Nguyen",
+    "fullName": "Luca Nguyen",
+    "roles": [
+      "Frontend Developer (React/TypeScript)",
+      "Backend Developer (Node.js/NestJS)",
+      "Fullstack JavaScript Developer"
+    ]
+  },
+  "hero": {
+    "intro": "// hello world !! Welcome to my portfolio",
+    "taglines": [
+      "Turning coffee into code",
+      "console.log('hello world!')",
+      "git commit -m 'fixed it... again'",
+      "It works on my machine ¯\\_(ツ)_/¯",
+      "Don't forget to drink 2L of water today",
+      "There are 10 types of people: those who get binary and those who don't",
+      "Have you tried turning it off and on again?",
+      "Production is just staging with consequences",
+      "Sleep is for people who don't have side projects",
+      "TODO: write better TODOs"
+    ],
+    "description": "I live at the intersection of **frontend** and **backend** with TypeScript. I build clean, scalable __React__ interfaces and reliable __Node.js__ APIs that ship to production.",
+    "badges": [
+      { "label": "Frontend Developer", "color": "accent" },
+      { "label": "Backend Developer", "color": "green" },
+      { "label": "Fullstack JS/TS", "color": "pink" },
+      { "label": "Cloud & DevOps Curious", "color": "orange" },
+      { "label": "Always Learning", "color": "muted" }
+    ],
+    "ctas": [
+      { "label": "Projects", "icon": "play", "variant": "primary" },
+      { "label": "About Me", "icon": "info", "variant": "ghost" },
+      { "label": "Contact", "icon": "mail", "variant": "ghost" }
+    ]
+  },
+  "stats": [
+    { "value": "3+", "label": "YEARS" },
+    { "value": "10+", "label": "PROJECTS" },
+    { "value": "∞", "label": "CURIOSITY" },
+    { "value": "↑", "label": "ALWAYS LEARNING" }
+  ],
+  "socials": [
+    { "label": "GitHub", "icon": "github", "href": "#" },
+    { "label": "LinkedIn", "icon": "linkedin", "href": "#" },
+    { "label": "Medium", "icon": "globe", "href": "#" },
+    { "label": "Tableau", "icon": "bookOpen", "href": "#" },
+    { "label": "LeetCode", "icon": "code2", "href": "#" },
+    { "label": "Email", "icon": "mail", "href": "#" }
+  ],
+  "about": {
+    "fileBanner": [
+      "// about.html - Aahana's Professional & Personal Story",
+      "// Fullstack Developer | Problem Solver | Coffee & Code Enthusiast"
+    ],
+    "professionalSummary": [
+      "I'm a **fullstack developer** with **3+ years** of experience building high-performance web applications. My expertise spans from crafting seamless user interfaces to architecting scalable backend systems.",
+      "Specializing in **Next.js**, **React**, and **PostgreSQL**, I focus on technical SEO optimization and delivering products that prioritize user experience. I believe great software solves real problems elegantly."
+    ],
+    "milestones": [
+      "Developed **Ling's Home** - A comprehensive digital service management platform that streamlined operations for 100+ businesses",
+      "Mastered **technical SEO** and **performance optimization**, improving page load times by 60% on average",
+      "Built **AI-powered features** and **ML integrations** as part of EdTech solutions",
+      "Contributed to **10+ production projects** across e-commerce, SaaS, and education sectors"
+    ],
+    "interests": [
+      { "icon": "code2", "title": "Coding", "description": "Exploring new technologies and open-source contributions" },
+      { "icon": "coffee", "title": "Coffee", "description": "My fuel for debugging, thinking, and solving problems" },
+      { "icon": "guitar", "title": "Guitar", "description": "Balancing technical precision with creative expression" }
+    ],
+    "philosophy": "Great software is built on three pillars: **clean code**, **user empathy**, and **continuous learning**. I strive to create products that are not just functional, but truly delightful to use."
+  },
+  "experiences": [
+    {
+      "period": "2025 - Present",
+      "title": "Junior Software Developer",
+      "company": "EduVanceAI",
+      "description": "Building intelligent backend systems and AI integrations for an EdTech platform. ML-powered personalization, RAG pipelines, and scalable APIs serving thousands of learners daily.",
+      "techStack": ["FastAPI", "Python", "Django", "PostgreSQL", "Docker", "AWS", "GenAI", "React"]
+    },
+    {
+      "period": "Jun 2023 – Aug 2023",
+      "title": "User Experience Designer",
+      "company": "Zepto Digital Labs",
+      "description": "Designed UI for a simulation platform and improved user experience through design thinking principles. Delivered research-backed interface improvements that enhanced usability.",
+      "techStack": ["Figma", "UX Research", "Design Thinking", "Prototyping"]
+    },
+    {
+      "period": "Jun 2023 – Jul 2023",
+      "title": "Back End Intern",
+      "company": "Laser Technologies Pvt Ltd",
+      "description": "Managed and maintained backend systems and databases to support enterprise-level web applications. Ensured uptime, performance, and data integrity across production systems.",
+      "techStack": ["Backend", "Databases", "SQL", "Web Applications"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "Ling's Home",
+      "description": "A comprehensive digital service management platform for seamless business operations",
+      "problemSolved": "Automated service booking, scheduling, and customer management for 100+ businesses",
+      "techStack": ["Next.js", "React", "PostgreSQL", "Tailwind CSS", "Stripe", "Vercel"],
+      "githubUrl": "https://github.com",
+      "liveUrl": "https://lingshome.com",
+      "thumbnail": "Dashboard with service listings and booking management"
+    },
+    {
+      "id": "2",
+      "title": "EduVance Platform",
+      "description": "AI-powered educational platform with personalized learning paths and GenAI integration",
+      "problemSolved": "Created ML-powered personalization engine and RAG pipelines for adaptive learning",
+      "techStack": ["FastAPI", "Python", "React", "PostgreSQL", "GenAI", "Docker", "AWS"],
+      "githubUrl": "https://github.com",
+      "liveUrl": "https://eduvance.ai",
+      "thumbnail": "Learning dashboard with AI-powered course recommendations"
+    },
+    {
+      "id": "3",
+      "title": "Performance Dashboard",
+      "description": "Real-time analytics and performance monitoring dashboard with technical SEO metrics",
+      "problemSolved": "Optimized SEO and performance tracking, improving page load times by 60%",
+      "techStack": ["Next.js", "React", "PostgreSQL", "D3.js", "Tailwind CSS"],
+      "githubUrl": "https://github.com",
+      "liveUrl": "https://dashboard.example.com",
+      "thumbnail": "Analytics dashboard with real-time metrics and charts"
+    },
+    {
+      "id": "4",
+      "title": "Design System UI Library",
+      "description": "Reusable component library for building consistent UIs across multiple projects",
+      "problemSolved": "Reduced development time by 40% through standardized, accessible components",
+      "techStack": ["React", "Storybook", "TypeScript", "Tailwind CSS", "npm"],
+      "githubUrl": "https://github.com",
+      "liveUrl": "https://ui-library.example.com",
+      "thumbnail": "Collection of reusable UI components and design tokens"
+    },
+    {
+      "id": "5",
+      "title": "E-commerce Platform",
+      "description": "Full-featured e-commerce platform with inventory management and payment integration",
+      "problemSolved": "Built complete transaction flow with Stripe integration and real-time inventory sync",
+      "techStack": ["Next.js", "PostgreSQL", "Stripe", "Vercel", "Redis"],
+      "githubUrl": "https://github.com",
+      "liveUrl": "https://ecommerce.example.com",
+      "thumbnail": "E-commerce product showcase and checkout flow"
+    }
+  ],
+  "skills": {
+    "categories": [
+      {
+        "title": "LANGUAGES & MARKUP",
+        "skills": [
+          { "name": "HTML5", "percentage": 95, "color": "orange" },
+          { "name": "CSS3", "percentage": 90, "color": "cyan" },
+          { "name": "JavaScript", "percentage": 92, "color": "yellow" },
+          { "name": "TypeScript", "percentage": 88, "color": "accent" }
+        ]
+      },
+      {
+        "title": "FRONTEND",
+        "skills": [
+          { "name": "React", "percentage": 92, "color": "cyan" },
+          { "name": "Tailwind CSS", "percentage": 90, "color": "cyan" },
+          { "name": "Shadcn/ui", "percentage": 85, "color": "purple" },
+          { "name": "Styled Components", "percentage": 80, "color": "pink" },
+          { "name": "Redux", "percentage": 82, "color": "purple" },
+          { "name": "React Query", "percentage": 85, "color": "red" }
+        ]
+      },
+      {
+        "title": "BACKEND",
+        "skills": [
+          { "name": "Node.js", "percentage": 88, "color": "green" },
+          { "name": "Express.js", "percentage": 85, "color": "yellow" },
+          { "name": "NestJS", "percentage": 82, "color": "red" }
+        ]
+      },
+      {
+        "title": "DATABASES",
+        "skills": [
+          { "name": "PostgreSQL", "percentage": 85, "color": "cyan" },
+          { "name": "MySQL", "percentage": 80, "color": "orange" }
+        ]
+      },
+      {
+        "title": "HOSTING & CLOUD",
+        "skills": [
+          { "name": "Render", "percentage": 85, "color": "purple" },
+          { "name": "Clever Cloud", "percentage": 78, "color": "red" },
+          { "name": "AWS Cloud", "percentage": 75, "color": "orange" }
+        ]
+      },
+      {
+        "title": "TOOLS",
+        "skills": [
+          { "name": "Git", "percentage": 90, "color": "orange" },
+          { "name": "NPM", "percentage": 90, "color": "red" },
+          { "name": "Prettier", "percentage": 88, "color": "green" },
+          { "name": "Brave Browser", "percentage": 85, "color": "orange" }
+        ]
+      }
+    ],
+    "familiar": ["More..."]
+  },
+  "contact": {
+    "fileBanner": [
+      "// contact.css - Let's connect & collaborate",
+      "// Always open to interesting projects and discussions"
+    ],
+    "methods": [
+      {
+        "icon": "mail",
+        "iconColor": "green",
+        "label": "Email",
+        "value": "aahana.bobade@example.com",
+        "href": "mailto:aahana.bobade@example.com"
+      },
+      {
+        "icon": "messageCircle",
+        "iconColor": "accent",
+        "label": "Telegram",
+        "value": "@aahana_bobade",
+        "href": "https://t.me/aahana_bobade"
+      },
+      {
+        "icon": "github",
+        "iconColor": "pink",
+        "label": "GitHub",
+        "value": "github.com/aahana",
+        "href": "https://github.com/aahana"
+      },
+      {
+        "icon": "linkedin",
+        "iconColor": "orange",
+        "label": "LinkedIn",
+        "value": "linkedin.com/in/aahana",
+        "href": "https://linkedin.com/in/aahana"
+      }
+    ],
+    "responseTime": {
+      "title": "Response Time",
+      "message": "I typically respond within 24 hours"
+    }
+  },
+  "readme": {
+    "fileBanner": [
+      "// README.md - Welcome to Aahana's Portfolio",
+      "// A fullstack developer's playground and professional showcase"
+    ],
+    "subtitleSegments": [
+      { "text": "Fullstack Developer", "color": "accent" },
+      { "text": "Problem Solver", "color": "green" },
+      { "text": "Perpetual Learner", "color": "accent" }
+    ],
+    "mission": "Building high-performance web products that prioritize user experience and technical excellence. From concept to production, I obsess over code quality, performance optimization, and solving real problems.",
+    "quickFacts": [
+      { "value": "3+", "label": "Years Experience", "color": "accent" },
+      { "value": "10+", "label": "Projects Built", "color": "green" },
+      { "value": "100%", "label": "Commitment", "color": "pink" },
+      { "value": "∞", "label": "Learning", "color": "orange" }
+    ],
+    "navigation": [
+      { "tab": "home.tsx", "icon": "eye", "description": "My personal intro and core stats" },
+      { "tab": "experience.ts", "icon": "code2", "description": "Professional journey and roles" },
+      { "tab": "about.html", "icon": "bookOpen", "description": "Background, philosophy, and interests" },
+      { "tab": "projects.js", "icon": "zap", "description": "Featured projects and impact" },
+      { "tab": "skills.json", "icon": "code2", "description": "Technical expertise by category" },
+      { "tab": "contact.css", "icon": "arrowRight", "description": "Get in touch and connect" }
+    ],
+    "footer": {
+      "comment": "// Built with React, Next.js & Tailwind CSS",
+      "credit": "Designed & developed by **Aahana Bobade**"
+    }
+  }
+}

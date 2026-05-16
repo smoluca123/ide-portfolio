@@ -21,6 +21,7 @@ import { StatusBar } from "./status-bar"
 import { Terminal } from "./terminal"
 import { CommandPalette } from "./command-palette"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { useKeybindings } from "@/hooks/use-keybindings"
 import { withAlpha } from "./themes"
 
 interface Tab {
@@ -104,17 +105,21 @@ function IDELayoutInner() {
     })
   }
 
-  // Ctrl+P opens the command palette.
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "p") {
-        e.preventDefault()
-        setCommandPaletteOpen(true)
-      }
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [])
+  // Ctrl+P / Ctrl+B / Ctrl+L / Ctrl+` — toggles for the IDE chrome.
+  // All keybindings live in `hooks/use-keybindings.ts`; this layout owns
+  // the panel state so it provides the handlers.
+  useKeybindings({
+    togglePalette: () => setCommandPaletteOpen((prev) => !prev),
+    toggleExplorer: () => setShowExplorer((prev) => !prev),
+    toggleCopilot: () => {
+      setShowCopilot((prev) => !prev)
+      setActiveTab("ai")
+    },
+    toggleTerminal: () => {
+      setShowTerminal((prev) => !prev)
+      setIsTerminalMinimized(false)
+    },
+  })
 
   const handleActivityChange = (tab: string) => {
     if (tab === "explorer") {
