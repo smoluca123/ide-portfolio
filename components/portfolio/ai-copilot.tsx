@@ -4,6 +4,7 @@ import { X, Send, Sparkles, Bot, User, Loader2, RotateCcw } from "lucide-react"
 import { useState, useRef, useEffect, FormEvent, KeyboardEvent } from "react"
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
+import { MarkdownContent } from "./markdown-content"
 import { suggestedQuestions } from "@/lib/ai-faq"
 
 interface AICopilotProps {
@@ -409,14 +410,18 @@ function ChatBubble({ msg }: { msg: ChatMessage }) {
         {isUser ? <User className="h-3 w-3" /> : <Bot className="h-3 w-3" />}
       </div>
       <div
-        className="max-w-[85%] whitespace-pre-wrap wrap-break-word rounded-md border px-3 py-2 font-mono text-[11px] leading-relaxed"
+        className="max-w-[85%] wrap-break-word rounded-md border px-3 py-2 font-mono text-[11px] leading-relaxed"
         style={{
           backgroundColor: bubbleBg,
           borderColor: bubbleBorder,
           color: textColor,
         }}
       >
-        {msg.content}
+        {isUser ? (
+          <span className="whitespace-pre-wrap">{msg.content}</span>
+        ) : (
+          <MarkdownContent>{msg.content}</MarkdownContent>
+        )}
         {!isUser && msg.source && msg.source !== "faq" && (
           <SourceTag source={msg.source} />
         )}

@@ -32,9 +32,12 @@ async function callOpenAI(
     throw new Error("AI_NOT_CONFIGURED")
   }
 
+  // Cap conversation history to keep prompt size predictable. 20 turns is
+  // enough for short follow-ups without blowing up token usage on long chats.
+  const MAX_HISTORY = 20
   const messages: ChatMessage[] = [
     { role: "system", content: SYSTEM_PROMPT },
-    ...history.slice(-6),
+    ...history.slice(-MAX_HISTORY),
     { role: "user", content: message },
   ]
 
