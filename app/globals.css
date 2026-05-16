@@ -1,0 +1,142 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Aahana Dark Portfolio - Default Theme */
+  --background: #1E1E1E;
+  --foreground: #FFFFFF;
+  --card: #1E1E1E;
+  --card-foreground: #FFFFFF;
+  --popover: #262626;
+  --popover-foreground: #FFFFFF;
+  --primary: #FFFFFF;
+  --primary-foreground: #1E1E1E;
+  --secondary: #CCCCCC;
+  --secondary-foreground: #1E1E1E;
+  --muted: #262626;
+  --muted-foreground: #CCCCCC;
+  --accent: #2DA8FF;
+  --accent-foreground: #1E1E1E;
+  --destructive: #FF5A5F;
+  --destructive-foreground: #FFFFFF;
+  --border: #374151;
+  --input: #262626;
+  --ring: #2DA8FF;
+  --radius: 0.25rem;
+
+  /* Sidebar */
+  --sidebar: #1A1A1A;
+  --sidebar-foreground: #CCCCCC;
+  --sidebar-primary: #2DA8FF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #374151;
+  --sidebar-ring: #2DA8FF;
+
+  /* Aahana Dark custom tokens */
+  --surface: #262626;
+  --accent-pink: #FF61D8;
+  --accent-cyan: #49D0C3;
+  --accent-blue: #2DA8FF;
+  --accent-electric: #5EC8FF;
+  --title-bar: #1A1A1A;
+  --tab-active: #1E1E1E;
+  --tab-inactive: #1A1A1A;
+  --status-bar: #0078d4;
+
+  /* Terminal colors */
+  --terminal-bg: #1E1E1E;
+  --terminal-header: #1A1A1A;
+  --terminal-text: #CCCCCC;
+  --terminal-success: #4EC994;
+  --terminal-error: #FF5A5F;
+  --terminal-prompt-user: #4EC994;
+  --terminal-prompt-host: #2DA8FF;
+  --terminal-comment: #808080;
+}
+
+/*
+ * NOTE: Theme switching is handled at runtime by `ThemeProvider`
+ * (see `components/portfolio/theme-context.tsx`), which writes CSS
+ * variables onto <html>. The `:root` block above is the SSR default
+ * (Aahana Dark) and is overridden once the provider hydrates.
+ */
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
+  --font-serif: 'Syne', system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-surface: var(--surface);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-electric: var(--accent-electric);
+  --color-title-bar: var(--title-bar);
+  --color-tab-active: var(--tab-active);
+  --color-tab-inactive: var(--tab-inactive);
+  --color-status-bar: var(--status-bar);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Compact scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+
