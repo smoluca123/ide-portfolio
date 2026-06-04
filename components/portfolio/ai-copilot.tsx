@@ -6,6 +6,7 @@ import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
 import { MarkdownContent } from "./markdown-content"
 import { suggestedQuestions } from "@/lib/ai-faq"
+import { portfolio } from "@/lib/portfolio"
 
 interface AICopilotProps {
   onClose: () => void
@@ -23,7 +24,7 @@ const initialAssistantMessage: ChatMessage = {
   id: "welcome",
   role: "assistant",
   content:
-    "Hi! I'm Aahana's Copilot. Ask me about her projects, skills, experience — or pick one of the suggestions below to get started.",
+    `Hi! I'm ${portfolio.identity.firstName}'s Copilot. Ask me about their projects, skills, experience — or pick one of the suggestions below to get started.`,
   source: "faq",
 }
 
@@ -177,7 +178,7 @@ export function AICopilot({ onClose }: AICopilotProps) {
             className="font-mono text-[13px] font-semibold"
             style={{ color: theme.foreground }}
           >
-            Aahana&apos;s AI Assistant
+            {portfolio.identity.firstName}&apos;s AI Assistant
           </span>
         </div>
         <div className="flex items-center gap-1">
@@ -239,7 +240,7 @@ export function AICopilot({ onClose }: AICopilotProps) {
               color: theme.accent,
             }}
           >
-            ● portfolio · aahana-bobade
+            ● portfolio · {portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-')}
           </span>
         </div>
       </div>
@@ -264,13 +265,13 @@ export function AICopilot({ onClose }: AICopilotProps) {
               className="mb-1 font-serif text-[16px] font-bold"
               style={{ color: theme.foreground }}
             >
-              Hi! I&apos;m Aahana&apos;s Copilot
+              Hi! I&apos;m {portfolio.identity.firstName}&apos;s Copilot
             </h3>
             <p
               className="font-mono text-[11px] leading-relaxed"
               style={{ color: theme.muted }}
             >
-              Ask me anything about her projects, skills, experience, or
+              Ask me anything about their projects, skills, experience, or
               achievements.
             </p>
           </div>
@@ -332,7 +333,7 @@ export function AICopilot({ onClose }: AICopilotProps) {
             onKeyDown={handleKeyDown}
             disabled={isSending}
             rows={2}
-            placeholder="Ask about Aahana's projects, skills..."
+            placeholder={`Ask about ${portfolio.identity.firstName}'s projects, skills...`}
             className="w-full resize-none rounded-sm border px-3 py-2 pr-10 font-mono text-[11px] outline-none transition-colors disabled:opacity-60"
             style={{
               backgroundColor: theme.surface,
@@ -374,7 +375,7 @@ export function AICopilot({ onClose }: AICopilotProps) {
           className="mt-1 text-center font-mono text-[9px]"
           style={{ color: theme.subtle }}
         >
-          AI can make mistakes · Contact Aahana directly for{" "}
+          AI can make mistakes · Contact {portfolio.identity.firstName} directly for{" "}
           <span style={{ color: theme.accent }}>important info</span>
         </p>
       </form>

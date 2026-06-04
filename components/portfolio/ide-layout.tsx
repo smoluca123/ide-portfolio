@@ -7,6 +7,7 @@ import { ThemeProvider, useTheme } from "./theme-context"
 import { TitleBar } from "./title-bar"
 import { ActivityBar } from "./activity-bar"
 import { FileExplorer } from "./file-explorer"
+import { SearchView } from "./search-view"
 import { EditorTabs } from "./editor-tabs"
 import { Breadcrumbs } from "./breadcrumbs"
 import { ExperienceContent } from "./experience-content"
@@ -16,27 +17,29 @@ import { ProjectsContent } from "./projects-content"
 import { SkillsContent } from "./skills-content"
 import { ContactContent } from "./contact-content"
 import { ReadmeContent } from "./readme-content"
+import { WelcomeContent } from "./welcome-content"
+import { ResumeContent } from "./resume-content"
 import { AICopilot } from "./ai-copilot"
 import { StatusBar } from "./status-bar"
 import { Terminal } from "./terminal"
 import { CommandPalette } from "./command-palette"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { useKeybindings } from "@/hooks/use-keybindings"
+import { useURLState } from "@/hooks/use-url-state"
 import { withAlpha } from "./themes"
-
-interface Tab {
-  name: string
-  ext: "tsx" | "html" | "js" | "json" | "ts" | "css" | "md"
-}
+import { portfolio } from "@/lib/portfolio"
+import type { Tab } from "./editor-tabs"
 
 const allTabs: Tab[] = [
-  { name: "home.tsx",       ext: "tsx"  },
-  { name: "about.html",     ext: "html" },
-  { name: "projects.js",    ext: "js"   },
-  { name: "skills.json",    ext: "json" },
-  { name: "experience.ts",  ext: "ts"   },
-  { name: "contact.css",    ext: "css"  },
-  { name: "README.md",      ext: "md"   },
+  { name: "Welcome.md",      ext: "md"   },
+  { name: "home.tsx",        ext: "tsx"  },
+  { name: "about.html",      ext: "html" },
+  { name: "projects.js",     ext: "js"   },
+  { name: "skills.json",     ext: "json" },
+  { name: "experience.ts",   ext: "ts"   },
+  { name: "contact.css",     ext: "css"  },
+  { name: "README.md",       ext: "md"   },
+  { name: "Resume.pdf",      ext: "pdf"  },
 ]
 
 export function IDELayout() {
@@ -48,42 +51,105 @@ export function IDELayout() {
 }
 
 function IDELayoutInner() {
-  const { theme } = useTheme()
+  const { theme, setThemeName } = useTheme()
   const isLgUp = useMediaQuery("(min-width: 1024px)")
   const isMdUp = useMediaQuery("(min-width: 768px)")
+  const { getURLState, setURLState } = useURLState()
 
   const [activeTab, setActiveTab] = useState("explorer")
-  const [activeFile, setActiveFile] = useState("home.tsx")
-  const [openTabs, setOpenTabs] = useState<Tab[]>(allTabs)
-  // Side panel visibility — meaning shifts based on viewport:
-  // - lg+: panel docked into the resizable group
-  // - <lg: panel rendered as an overlay drawer
-  //
-  // Both default to false so SSR / first paint never flashes a drawer in the
-  // wrong state. The mount effect below sets them to the correct value once
-  // the real viewport size is known.
+  const [activeFile, setActiveFile] = useState("Welcome.md")
+  const [openTabs, setOpenTabs] = useState<Tab[]>([allTabs[0]]) // Start with Welcome only
   const [showExplorer, setShowExplorer] = useState(false)
   const [showCopilot, setShowCopilot] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
   const [showTerminal, setShowTerminal] = useState(true)
   const [isTerminalMinimized, setIsTerminalMinimized] = useState(false)
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
   const [sourceControlOpen, setSourceControlOpen] = useState(false)
+  const [hasSeenWelcome, setHasSeenWelcome] = useState(false)
   const gitButtonRef = useRef<HTMLButtonElement>(null)
 
-  // Default state per breakpoint:
+  // Initialize from URL on mount
+  useEffect(() => {
+    const urlState = getURLState()
+    
+    // Check if user has seen welcome before
+    const welcomed = localStorage.getItem("portfolio-welcomed")
+    setHasSeenWelcome(!!welcomed)
+
+    // Apply URL state if present
+    if (urlState.file) {
+      const tab = allTabs.find((t) => t.name === urlState.file)
+      if (tab) {
+        setActiveFile(urlState.file)
+        setOpenTabs((prev) => {
+          if (prev.some((t) => t.name === urlState.file)) return prev
+          return [...prev, tab]
+        })
+      }
+    } else if (welcomed) {
+      // If not first time, start with home instead of welcome
+      setActiveFile("home.tsx")
+      setOpenTabs([allTabs.find((t) => t.name === "home.tsx")!])
+    }
+
+    if (urlState.theme) {
+      // Cast to ThemeId to handle dynamic theme names
+      setThemeName(urlState.theme as any)
+    }
+
+    if (urlState.explorer === "true") setShowExplorer(true)
+    if (urlState.copilot === "true") setShowCopilot(true)
+    if (urlState.terminal === "false") setShowTerminal(false)
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Only on mount, getURLState/setThemeName intentionally excluded
+
+  // Sync state to URL when it changes (debounced to prevent loops)
+  useEffect(() => {
+    // Skip sync on initial mount or if in SSR
+    if (typeof window === "undefined") return
+    
+    const timeoutId = setTimeout(() => {
+      setURLState({
+        file: activeFile,
+        theme: theme.name,
+        explorer: showExplorer ? "true" : undefined,
+        copilot: showCopilot ? "true" : undefined,
+        terminal: showTerminal ? undefined : "false",
+      })
+    }, 100) // Debounce to prevent rapid updates
+
+    return () => clearTimeout(timeoutId)
+  }, [activeFile, theme.name, showExplorer, showCopilot, showTerminal])
+  // setURLState intentionally excluded from deps to prevent loop
+
+  // Default state per breakpoint (only set if not already set by URL)
   // - On large screens, side panels open by default (docked, no animation).
   // - On small screens, they stay closed so nothing overlays the editor.
+  const hasInitialized = useRef(false)
   useEffect(() => {
-    if (isLgUp) {
-      setShowExplorer(true)
-      setShowCopilot(true)
-    } else {
-      setShowExplorer(false)
-      setShowCopilot(false)
+    // Only run once after mount, don't interfere with URL state
+    if (hasInitialized.current) return
+    hasInitialized.current = true
+
+    // Only set defaults if URL didn't specify
+    const urlState = getURLState()
+    if (!urlState.explorer) {
+      setShowExplorer(isLgUp)
     }
-  }, [isLgUp])
+    if (!urlState.copilot) {
+      setShowCopilot(isLgUp)
+    }
+  }, [isLgUp, getURLState])
 
   const handleFileSelect = (file: string) => {
+    // Mark welcome as seen when navigating away from it
+    if (file !== "Welcome.md" && !hasSeenWelcome) {
+      localStorage.setItem("portfolio-welcomed", "true")
+      setHasSeenWelcome(true)
+    }
+
     setActiveFile(file)
     setOpenTabs((prev) => {
       if (prev.some((t) => t.name === file)) return prev
@@ -92,7 +158,10 @@ function IDELayoutInner() {
       return prev
     })
     // On mobile, picking a file should close the drawer.
-    if (!isLgUp) setShowExplorer(false)
+    if (!isLgUp) {
+      setShowExplorer(false)
+      setShowSearch(false)
+    }
   }
 
   const handleCloseTab = (name: string) => {
@@ -105,7 +174,7 @@ function IDELayoutInner() {
     })
   }
 
-  // Ctrl+P / Ctrl+B / Ctrl+L / Ctrl+` — toggles for the IDE chrome.
+  // Ctrl+P / Ctrl+B / Ctrl+L / Ctrl+` / Ctrl+Shift+F — toggles for the IDE chrome.
   // All keybindings live in `hooks/use-keybindings.ts`; this layout owns
   // the panel state so it provides the handlers.
   useKeybindings({
@@ -119,11 +188,19 @@ function IDELayoutInner() {
       setShowTerminal((prev) => !prev)
       setIsTerminalMinimized(false)
     },
+    toggleSearch: () => {
+      setShowSearch((prev) => !prev)
+      setActiveTab("search")
+    },
   })
 
   const handleActivityChange = (tab: string) => {
     if (tab === "explorer") {
       setShowExplorer((prev) => !prev)
+      if (showSearch) setShowSearch(false)
+    } else if (tab === "search") {
+      setShowSearch((prev) => !prev)
+      if (showExplorer) setShowExplorer(false)
     } else if (tab === "ai") {
       setShowCopilot((prev) => !prev)
     } else if (tab === "terminal") {
@@ -136,15 +213,15 @@ function IDELayoutInner() {
   }
 
   // On large screens the panels are docked and resizable.
-  const explorerDocked = showExplorer && isLgUp
+  const leftPanelDocked = (showExplorer || showSearch) && isLgUp
   const copilotDocked = showCopilot && isLgUp
   // Below lg they render as overlay drawers.
-  const explorerOverlay = showExplorer && !isLgUp
+  const leftPanelOverlay = (showExplorer || showSearch) && !isLgUp
   const copilotOverlay = showCopilot && !isLgUp
 
   // The autoSaveId varies based on which docked panels are mounted so the
   // saved layout matches the panel count.
-  const layoutKey = `ide-${explorerDocked ? "L" : ""}M${copilotDocked ? "R" : ""}`
+  const layoutKey = `ide-${leftPanelDocked ? "L" : ""}M${copilotDocked ? "R" : ""}`
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
@@ -179,7 +256,7 @@ function IDELayoutInner() {
           autoSaveId={layoutKey}
           className="flex-1"
         >
-          {explorerDocked && (
+          {leftPanelDocked && (
             <>
               <Panel
                 id="sidebar"
@@ -190,7 +267,10 @@ function IDELayoutInner() {
                 collapsible
                 collapsedSize={0}
               >
-                <FileExplorer activeFile={activeFile} onFileSelect={handleFileSelect} />
+                {showExplorer && (
+                  <FileExplorer activeFile={activeFile} onFileSelect={handleFileSelect} />
+                )}
+                {showSearch && <SearchView onFileSelect={handleFileSelect} />}
               </Panel>
               <ResizeHandle borderColor={theme.border} accent={theme.accent} />
             </>
@@ -207,8 +287,9 @@ function IDELayoutInner() {
                   onReorderTabs={setOpenTabs}
                 />
                 {isMdUp && (
-                  <Breadcrumbs path={["aahana-bobade", "src", activeFile]} />
+                  <Breadcrumbs path={[portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-'), "src", activeFile]} />
                 )}
+                {activeFile === "Welcome.md" && <WelcomeContent onFileSelect={handleFileSelect} />}
                 {activeFile === "home.tsx" && <HomeContent />}
                 {activeFile === "experience.ts" && <ExperienceContent />}
                 {activeFile === "about.html" && <AboutContent />}
@@ -216,6 +297,7 @@ function IDELayoutInner() {
                 {activeFile === "skills.json" && <SkillsContent />}
                 {activeFile === "contact.css" && <ContactContent />}
                 {activeFile === "README.md" && <ReadmeContent />}
+                {activeFile === "Resume.pdf" && <ResumeContent />}
               </div>
 
               {showTerminal && !isTerminalMinimized && (
@@ -248,15 +330,21 @@ function IDELayoutInner() {
 
         {/* Mobile / tablet: side panels render as overlay drawers */}
         <Drawer
-          open={explorerOverlay}
+          open={leftPanelOverlay}
           side="left"
-          onClose={() => setShowExplorer(false)}
+          onClose={() => {
+            setShowExplorer(false)
+            setShowSearch(false)
+          }}
           theme={theme}
           width={isMdUp ? 280 : 260}
-          ariaLabel="File explorer"
+          ariaLabel={showExplorer ? "File explorer" : "Search"}
           showCloseButton
         >
-          <FileExplorer activeFile={activeFile} onFileSelect={handleFileSelect} />
+          {showExplorer && (
+            <FileExplorer activeFile={activeFile} onFileSelect={handleFileSelect} />
+          )}
+          {showSearch && <SearchView onFileSelect={handleFileSelect} />}
         </Drawer>
 
         <Drawer

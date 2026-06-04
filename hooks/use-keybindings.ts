@@ -24,6 +24,7 @@ export type KeybindingId =
   | "toggleExplorer"
   | "toggleCopilot"
   | "toggleTerminal"
+  | "toggleSearch"
 
 export interface Keybinding {
   /** Stable identifier — keep these in sync with `KeybindingId`. */
@@ -68,6 +69,13 @@ export const KEYBINDINGS: readonly Keybinding[] = [
     description: "Toggle Terminal",
     category: "view",
     display: "Ctrl+`",
+  },
+  {
+    id: "toggleSearch",
+    keys: "mod+shift+f",
+    description: "Search Workspace",
+    category: "navigation",
+    display: "Ctrl+Shift+F",
   },
 ] as const
 

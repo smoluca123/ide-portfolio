@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from "react"
 import { X, ChevronUp, ChevronDown, TerminalSquare, AlertCircle, FileText } from "lucide-react"
 import { useTheme } from "./theme-context"
 import { ThemePicker } from "./theme-picker"
+import { portfolio } from "@/lib/portfolio"
 
 interface HistoryEntry {
   type: "command" | "output" | "error" | "success" | "info"
@@ -19,7 +20,7 @@ const COMMANDS: Record<string, { description: string; output: string | string[] 
       "",
       "  help      - Show this help message",
       "  clear     - Clear terminal history",
-      "  about     - Learn about Aahana",
+      `  about     - Learn about ${portfolio.identity.firstName}`,
       "  skills    - View technical skills",
       "  projects  - List featured projects",
       "  contact   - Get contact information",
@@ -33,15 +34,15 @@ const COMMANDS: Record<string, { description: string; output: string | string[] 
     ],
   },
   about: {
-    description: "Learn about Aahana",
+    description: `Learn about ${portfolio.identity.firstName}`,
     output: [
       "┌─────────────────────────────────────────────┐",
-      "│  Aahana Bobade                              │",
-      "│  Junior Software Developer                  │",
+      `│  ${portfolio.identity.fullName.padEnd(43)} │`,
+      `│  ${portfolio.identity.roles[0].padEnd(43)} │`,
       "│                                             │",
       "│  Passionate about building intelligent      │",
       "│  backend systems and AI integrations.       │",
-      "│  Currently working at EduVanceAI.           │",
+      `│  Currently working at ${portfolio.experiences[0]?.company || 'building cool stuff'}.${' '.repeat(Math.max(0, 23 - (portfolio.experiences[0]?.company || 'building cool stuff').length))} │`,
       "└─────────────────────────────────────────────┘",
     ],
   },
@@ -77,18 +78,18 @@ const COMMANDS: Record<string, { description: string; output: string | string[] 
     output: [
       "Contact Information:",
       "",
-      "  Email    : aahana@example.com",
-      "  GitHub   : github.com/aahana-bobade",
-      "  LinkedIn : linkedin.com/in/aahana-bobade",
+      `  Email    : ${portfolio.contact.methods.find(m => m.label === 'Email')?.value || 'N/A'}`,
+      `  GitHub   : ${portfolio.contact.methods.find(m => m.label === 'GitHub')?.value || 'N/A'}`,
+      `  LinkedIn : ${portfolio.contact.methods.find(m => m.label === 'LinkedIn')?.value || 'N/A'}`,
     ],
   },
   whoami: {
     description: "Display current user",
-    output: "aahana",
+    output: portfolio.identity.firstName.toLowerCase(),
   },
   pwd: {
     description: "Print working directory",
-    output: "/home/aahana/portfolio",
+    output: `/home/${portfolio.identity.firstName.toLowerCase()}/portfolio`,
   },
   date: {
     description: "Display current date",
@@ -379,7 +380,7 @@ export function Terminal({ onClose, isMinimized = false, onToggleMinimize }: Ter
             <div className="border-t" style={{ borderColor: theme.border }}>
               <div className="flex items-center gap-2 px-3 py-2">
                 <span className="font-mono text-[13px]" style={{ color: theme.terminalPromptUser }}>
-                  aahana
+                  {portfolio.identity.firstName.toLowerCase()}
                 </span>
                 <span className="font-mono text-[13px]" style={{ color: theme.terminalPromptHost }}>
                   @portfolio

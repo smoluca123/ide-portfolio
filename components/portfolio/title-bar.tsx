@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react"
 import { useTheme } from "./theme-context"
+import { portfolio } from "@/lib/portfolio"
 
 const menuItems = ["File", "Edit", "View", "Go", "Run", "Terminal", "Help", "Copilot"]
 
@@ -71,7 +72,7 @@ export function TitleBar({ onCommandPaletteOpen }: TitleBarProps) {
           className="truncate font-mono text-[11px]"
           style={{ color: theme.foreground }}
         >
-          aahana-bobade&nbsp;:&nbsp;portfolio
+          {portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-')}&nbsp;:&nbsp;portfolio
         </span>
         <span
           className="hidden shrink-0 rounded-sm px-1 font-mono text-[9px] md:inline"

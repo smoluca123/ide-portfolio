@@ -91,13 +91,7 @@ export function ActivityBar({
             <button
               key={id}
               title={label}
-              onClick={() => {
-                if (id === "search") {
-                  onCommandPaletteOpen?.()
-                } else {
-                  onTabChange(id)
-                }
-              }}
+              onClick={() => onTabChange(id)}
               aria-label={label}
               className={cn("relative flex h-10 w-10 items-center justify-center rounded-sm transition-colors")}
               style={{

@@ -4,6 +4,7 @@ import { GitBranch, AlertCircle, Sparkles } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useTheme } from "./theme-context"
 import { ThemePicker } from "./theme-picker"
+import { portfolio } from "@/lib/portfolio"
 
 export function StatusBar() {
   const { theme } = useTheme()
@@ -41,7 +42,7 @@ export function StatusBar() {
           <span>0</span>
         </div>
         <span className="hidden truncate opacity-70 md:inline">
-          Aahana&apos;s Portfolio
+          {portfolio.identity.fullName}&apos;s Portfolio
         </span>
       </div>
 

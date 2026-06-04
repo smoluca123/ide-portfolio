@@ -53,7 +53,7 @@
   ],
   "about": {
     "fileBanner": [
-      "// about.html - Aahana's Professional & Personal Story",
+      "// about.html - Professional & Personal Story",
       "// Fullstack Developer | Problem Solver | Coffee & Code Enthusiast"
     ],
     "professionalSummary": [
@@ -215,29 +215,29 @@
         "icon": "mail",
         "iconColor": "green",
         "label": "Email",
-        "value": "aahana.bobade@example.com",
-        "href": "mailto:aahana.bobade@example.com"
+        "value": "luca.nguyen@example.com",
+        "href": "mailto:luca.nguyen@example.com"
       },
       {
         "icon": "messageCircle",
         "iconColor": "accent",
         "label": "Telegram",
-        "value": "@aahana_bobade",
-        "href": "https://t.me/aahana_bobade"
+        "value": "@luca_nguyen",
+        "href": "https://t.me/luca_nguyen"
       },
       {
         "icon": "github",
         "iconColor": "pink",
         "label": "GitHub",
-        "value": "github.com/aahana",
-        "href": "https://github.com/aahana"
+        "value": "github.com/luca",
+        "href": "https://github.com/luca"
       },
       {
         "icon": "linkedin",
         "iconColor": "orange",
         "label": "LinkedIn",
-        "value": "linkedin.com/in/aahana",
-        "href": "https://linkedin.com/in/aahana"
+        "value": "linkedin.com/in/luca",
+        "href": "https://linkedin.com/in/luca"
       }
     ],
     "responseTime": {
@@ -247,7 +247,7 @@
   },
   "readme": {
     "fileBanner": [
-      "// README.md - Welcome to Aahana's Portfolio",
+      "// README.md - Welcome to Portfolio",
       "// A fullstack developer's playground and professional showcase"
     ],
     "subtitleSegments": [
@@ -272,7 +272,7 @@
     ],
     "footer": {
       "comment": "// Built with React, Next.js & Tailwind CSS",
-      "credit": "Designed & developed by **Aahana Bobade**"
+      "credit": "Designed & developed by **Luca Nguyen**"
     }
   }
 }

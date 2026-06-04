@@ -25,7 +25,7 @@ import { CSS } from "@dnd-kit/utilities"
 
 export interface Tab {
   name: string
-  ext: "tsx" | "html" | "js" | "json" | "ts" | "css" | "md"
+  ext: "tsx" | "html" | "js" | "json" | "ts" | "css" | "md" | "pdf"
 }
 
 interface EditorTabsProps {

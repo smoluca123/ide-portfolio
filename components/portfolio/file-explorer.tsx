@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
+import { portfolio } from "@/lib/portfolio"
 
 export interface FileEntry {
   name: string
@@ -17,6 +18,7 @@ interface FileExplorerProps {
 }
 
 const files: FileEntry[] = [
+  { name: "Welcome.md",        ext: "md"   },
   { name: "home.tsx",          ext: "tsx"  },
   { name: "about.html",        ext: "html" },
   { name: "projects.js",       ext: "js"   },
@@ -24,7 +26,7 @@ const files: FileEntry[] = [
   { name: "experience.ts",     ext: "ts"   },
   { name: "contact.css",       ext: "css"  },
   { name: "README.md",         ext: "md"   },
-  { name: "Aahana_Resume.pdf", ext: "pdf"  },
+  { name: "Resume.pdf",        ext: "pdf"  },
 ]
 
 const EXT_COLOR: Record<FileEntry["ext"], string> = {
@@ -68,6 +70,7 @@ function FileIcon({ ext }: { ext: FileEntry["ext"] }) {
 export function FileExplorer({ activeFile, onFileSelect }: FileExplorerProps) {
   const [open, setOpen] = useState(true)
   const { theme } = useTheme()
+  const username = portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-')
 
   return (
     <div
@@ -104,7 +107,7 @@ export function FileExplorer({ activeFile, onFileSelect }: FileExplorerProps) {
         ) : (
           <ChevronRight className="h-3.5 w-3.5 shrink-0" />
         )}
-        <span className="font-mono text-[12px]">aahana-bobade</span>
+        <span className="font-mono text-[12px]">{username}</span>
       </button>
 
       {/* Files */}
@@ -158,7 +161,7 @@ export function FileExplorer({ activeFile, onFileSelect }: FileExplorerProps) {
           }}
         >
           <span className="font-mono text-[10px]" style={{ color: theme.pink }}>
-            ✦ Aahana&apos;s
+            ✦ {portfolio.identity.firstName}&apos;s
           </span>
           <span className="font-mono text-[10px]" style={{ color: theme.foreground }}>
             Copilot

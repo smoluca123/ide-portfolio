@@ -10,6 +10,8 @@ interface ThemeContextType {
   theme: ThemePalette
   /** Switch to a specific theme by id. */
   setTheme: (id: ThemeId) => void
+  /** Set theme by name (alias for setTheme, for convenience). */
+  setThemeName: (id: ThemeId) => void
   /** Cycle to the next available theme (handy for keyboard shortcut / button). */
   cycleTheme: () => void
   /** All registered themes, in declaration order, for pickers. */
@@ -123,6 +125,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       themeId,
       theme: themes[themeId],
       setTheme,
+      setThemeName: setTheme, // Alias
       cycleTheme,
       themes: themeList,
     }),

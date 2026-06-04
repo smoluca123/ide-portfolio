@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Search, Sparkles } from "lucide-react"
 import { useTheme } from "./theme-context"
+import { portfolio } from "@/lib/portfolio"
 import {
   Dialog,
   DialogContent,
@@ -27,13 +28,14 @@ interface FileItem {
 const COMMANDS: Command[] = [
   {
     id: "open-copilot",
-    label: "Open Aahana's Copilot",
+    label: `Open ${portfolio.identity.firstName}'s Copilot`,
     shortcut: "Ctrl+Shift+C",
     icon: <Sparkles className="h-4 w-4" />,
   },
 ]
 
 const FILES: FileItem[] = [
+  { name: "Welcome.md", path: "./", ext: "md" },
   { name: "home.tsx", path: "src/", ext: "tsx" },
   { name: "about.html", path: "src/", ext: "html" },
   { name: "projects.js", path: "src/", ext: "js" },
@@ -41,7 +43,7 @@ const FILES: FileItem[] = [
   { name: "experience.ts", path: "src/", ext: "ts" },
   { name: "contact.css", path: "src/", ext: "css" },
   { name: "README.md", path: "./", ext: "md" },
-  { name: "Aahana_Resume.pdf", path: "./", ext: "pdf" },
+  { name: "Resume.pdf", path: "./", ext: "pdf" },
 ]
 
 const EXT_COLOR: Record<FileItem["ext"], string> = {
