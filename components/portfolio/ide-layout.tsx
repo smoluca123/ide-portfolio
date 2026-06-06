@@ -290,7 +290,7 @@ function IDELayoutInner() {
                   <Breadcrumbs path={[portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-'), "src", activeFile]} />
                 )}
                 {activeFile === "Welcome.md" && <WelcomeContent onFileSelect={handleFileSelect} />}
-                {activeFile === "home.tsx" && <HomeContent />}
+                {activeFile === "home.tsx" && <HomeContent onFileSelect={handleFileSelect} />}
                 {activeFile === "experience.ts" && <ExperienceContent />}
                 {activeFile === "about.html" && <AboutContent />}
                 {activeFile === "projects.js" && <ProjectsContent />}

@@ -10,7 +10,11 @@ import { useMemo } from "react"
 
 const { identity, hero, stats, socials } = portfolio
 
-export function HomeContent() {
+interface HomeContentProps {
+  onFileSelect?: (file: string) => void
+}
+
+export function HomeContent({ onFileSelect }: HomeContentProps) {
   const { theme } = useTheme()
 
   // Build the typing sequence: type each tagline, hold for ~2s, delete, repeat.
@@ -117,9 +121,16 @@ export function HomeContent() {
       <div className="mb-16 flex gap-4">
         {hero.ctas.map((cta) => {
           const isPrimary = cta.variant === "primary"
+          const fileMap: Record<string, string> = {
+            Projects: "projects.js",
+            "About Me": "about.html",
+            Contact: "contact.css",
+          }
+          const file = fileMap[cta.label]
           return (
             <button
               key={cta.label}
+              onClick={() => file && onFileSelect?.(file)}
               className="flex items-center gap-2 rounded-sm border px-4 py-2 font-mono text-[12px] font-semibold transition-all hover:opacity-90"
               style={{
                 backgroundColor: isPrimary ? theme.accent : "transparent",
