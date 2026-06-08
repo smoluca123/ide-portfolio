@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Search, Sparkles } from "lucide-react"
 import { useTheme } from "./theme-context"
 import { portfolio } from "@/lib/portfolio"
+import { useIDEStore } from "@/lib/store/ide-store"
 import {
   Dialog,
   DialogContent,
@@ -85,6 +86,8 @@ export function CommandPalette({
   const [search, setSearch] = useState("")
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const openFile = useIDEStore((s) => s.openFile)
+  const handleFileSelect = onFileSelect ?? openFile
 
   const filteredCommands = COMMANDS.filter((cmd) =>
     cmd.label.toLowerCase().includes(search.toLowerCase()),
@@ -130,7 +133,7 @@ export function CommandPalette({
           selected.action?.()
           onCommand?.(selected.id)
         } else {
-          onFileSelect?.((selected as FileItem).name)
+          handleFileSelect((selected as FileItem).name)
         }
         onClose()
       }
@@ -138,7 +141,7 @@ export function CommandPalette({
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [isOpen, selectedIndex, allItems, onClose, onFileSelect, onCommand])
+  }, [isOpen, selectedIndex, allItems, onClose, handleFileSelect, onCommand])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -254,7 +257,7 @@ export function CommandPalette({
                         <button
                           key={file.name}
                           onClick={() => {
-                            onFileSelect?.(file.name)
+                            handleFileSelect(file.name)
                             onClose()
                           }}
                           className="w-full px-4 py-2 text-left font-mono text-sm transition-colors"

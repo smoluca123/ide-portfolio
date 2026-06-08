@@ -7,6 +7,7 @@ import { withAlpha } from "./themes"
 import { MarkdownContent } from "./markdown-content"
 import { suggestedQuestions } from "@/lib/ai-faq"
 import { portfolio } from "@/lib/portfolio"
+import { trackAiQuestion } from "@/lib/analytics"
 
 interface AICopilotProps {
   onClose: () => void
@@ -39,10 +40,60 @@ export function AICopilot({ onClose }: AICopilotProps) {
     initialAssistantMessage,
   ])
   const [isSending, setIsSending] = useState(false)
+  // Id of the assistant message currently being streamed (null when idle).
+  const [streamingId, setStreamingId] = useState<string | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  // Auto-scroll on new messages.
+  // Typewriter reveal queue. Deltas arrive in bursts from the network; this
+  // drains them at a steady pace so the text appears to "type" smoothly.
+  const queueRef = useRef<{ id: string; pending: string; done: boolean } | null>(
+    null,
+  )
+  const timerRef = useRef<number | null>(null)
+
+  const stopTimer = () => {
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+  }
+
+  // Reveal a few characters per tick. Accelerates when a backlog builds up so
+  // a fast model never lags noticeably behind the network.
+  const tick = () => {
+    const q = queueRef.current
+    if (!q) return
+
+    if (q.pending.length > 0) {
+      const step = Math.max(2, Math.ceil(q.pending.length / 8))
+      const chunk = q.pending.slice(0, step)
+      q.pending = q.pending.slice(step)
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === q.id ? { ...m, content: m.content + chunk } : m,
+        ),
+      )
+    } else if (q.done) {
+      // Stream finished and buffer drained — settle back to idle.
+      stopTimer()
+      queueRef.current = null
+      setStreamingId(null)
+      setIsSending(false)
+      requestAnimationFrame(() => inputRef.current?.focus())
+      return
+    }
+    timerRef.current = window.setTimeout(tick, 16)
+  }
+
+  const ensureTimer = () => {
+    if (timerRef.current === null) tick()
+  }
+
+  // Clean up any running timer on unmount.
+  useEffect(() => () => stopTimer(), [])
+
+  // Auto-scroll on new messages / streamed content.
   useEffect(() => {
     const el = scrollRef.current
     if (el) el.scrollTop = el.scrollHeight
@@ -60,6 +111,8 @@ export function AICopilot({ onClose }: AICopilotProps) {
     const text = rawText.trim()
     if (!text || isSending) return
 
+    trackAiQuestion(text.length)
+
     const userMsg: ChatMessage = {
       id: makeId(),
       role: "user",
@@ -71,15 +124,13 @@ export function AICopilot({ onClose }: AICopilotProps) {
       .filter((m) => m.id !== "welcome")
       .map((m) => ({ role: m.role, content: m.content }))
 
+    // The placeholder assistant bubble we'll stream tokens into.
+    const assistantId = makeId()
+
     setMessages((prev) => [...prev, userMsg])
     setMessage("")
     setIsSending(true)
-
-    // Simulate "thinking" so canned FAQ replies don't feel instant.
-    // Scales with message length so longer answers feel proportional.
-    const thinkingStart = Date.now()
-    const minThinkingMs = 700
-    const maxThinkingMs = 1800
+    setStreamingId(null)
 
     try {
       const res = await fetch("/api/chat", {
@@ -87,54 +138,126 @@ export function AICopilot({ onClose }: AICopilotProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text, history: historyForApi }),
       })
-      const data = (await res.json()) as {
-        answer?: string
-        source?: ChatMessage["source"]
-        error?: string
-      }
-      const answer =
-        data.answer ??
-        "Sorry, something went wrong. Please try again in a moment."
 
-      // Pad the perceived latency up to a humane minimum.
-      const targetMs = Math.min(
-        maxThinkingMs,
-        minThinkingMs + Math.floor(answer.length / 6),
-      )
-      const elapsed = Date.now() - thinkingStart
-      if (elapsed < targetMs) {
-        await new Promise((resolve) => setTimeout(resolve, targetMs - elapsed))
+      // Rate limiting and validation errors come back as plain JSON.
+      const contentType = res.headers.get("content-type") ?? ""
+      if (!res.ok || !contentType.includes("ndjson") || !res.body) {
+        let answer =
+          "Sorry, something went wrong. Please try again in a moment."
+        try {
+          const data = (await res.json()) as { answer?: string; error?: string }
+          answer = data.answer ?? data.error ?? answer
+        } catch {
+          /* keep default */
+        }
+        setMessages((prev) => [
+          ...prev,
+          { id: assistantId, role: "assistant", content: answer, source: "error" },
+        ])
+        setIsSending(false)
+        requestAnimationFrame(() => inputRef.current?.focus())
+        return
       }
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: makeId(),
-          role: "assistant",
-          content: answer,
-          source: data.source ?? "error",
-        },
-      ])
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ""
+      let bubbleCreated = false
+
+      const handleEvent = (line: string) => {
+        const trimmed = line.trim()
+        if (!trimmed) return
+        let event: {
+          type: string
+          source?: ChatMessage["source"]
+          content?: string
+          message?: string
+        }
+        try {
+          event = JSON.parse(trimmed)
+        } catch {
+          return
+        }
+
+        if (event.type === "meta") {
+          // First event: create the assistant bubble and start the typewriter.
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: assistantId,
+              role: "assistant",
+              content: "",
+              source: event.source ?? "ai",
+            },
+          ])
+          bubbleCreated = true
+          setStreamingId(assistantId)
+          queueRef.current = { id: assistantId, pending: "", done: false }
+        } else if (event.type === "delta" && event.content) {
+          if (!queueRef.current) {
+            queueRef.current = { id: assistantId, pending: "", done: false }
+            if (!bubbleCreated) {
+              setMessages((prev) => [
+                ...prev,
+                { id: assistantId, role: "assistant", content: "", source: "ai" },
+              ])
+              bubbleCreated = true
+              setStreamingId(assistantId)
+            }
+          }
+          queueRef.current.pending += event.content
+          ensureTimer()
+        } else if (event.type === "error") {
+          if (queueRef.current) {
+            queueRef.current.pending +=
+              "\n\nThe response was interrupted. Please try again."
+          }
+        }
+      }
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split("\n")
+        buffer = lines.pop() ?? ""
+        for (const line of lines) handleEvent(line)
+      }
+      if (buffer.trim()) handleEvent(buffer)
+
+      // Mark the queue complete; the timer settles state once drained.
+      if (queueRef.current) {
+        queueRef.current.done = true
+        ensureTimer()
+      } else {
+        // No content at all — surface a generic error and reset.
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: assistantId,
+            role: "assistant",
+            content: "Sorry, I didn't get a response. Please try again.",
+            source: "error",
+          },
+        ])
+        setIsSending(false)
+        requestAnimationFrame(() => inputRef.current?.focus())
+      }
     } catch {
-      const elapsed = Date.now() - thinkingStart
-      if (elapsed < minThinkingMs) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, minThinkingMs - elapsed),
-        )
-      }
+      stopTimer()
+      queueRef.current = null
+      setStreamingId(null)
       setMessages((prev) => [
         ...prev,
         {
-          id: makeId(),
+          id: assistantId,
           role: "assistant",
           content:
             "I couldn't reach the chat service. Check your connection and try again.",
           source: "error",
         },
       ])
-    } finally {
       setIsSending(false)
-      // Refocus input for fast follow-ups.
       requestAnimationFrame(() => inputRef.current?.focus())
     }
   }
@@ -156,6 +279,10 @@ export function AICopilot({ onClose }: AICopilotProps) {
   }
 
   const handleReset = () => {
+    stopTimer()
+    queueRef.current = null
+    setStreamingId(null)
+    setIsSending(false)
     setMessages([initialAssistantMessage])
     setMessage("")
   }
@@ -281,9 +408,13 @@ export function AICopilot({ onClose }: AICopilotProps) {
         {messages.length > 1 && (
           <div className="flex flex-col gap-3">
             {messages.map((msg) => (
-              <ChatBubble key={msg.id} msg={msg} />
+              <ChatBubble
+                key={msg.id}
+                msg={msg}
+                isStreaming={msg.id === streamingId}
+              />
             ))}
-            {isSending && <TypingIndicator />}
+            {isSending && !streamingId && <TypingIndicator />}
           </div>
         )}
 
@@ -383,7 +514,13 @@ export function AICopilot({ onClose }: AICopilotProps) {
   )
 }
 
-function ChatBubble({ msg }: { msg: ChatMessage }) {
+function ChatBubble({
+  msg,
+  isStreaming = false,
+}: {
+  msg: ChatMessage
+  isStreaming?: boolean
+}) {
   const { theme } = useTheme()
   const isUser = msg.role === "user"
 
@@ -421,9 +558,18 @@ function ChatBubble({ msg }: { msg: ChatMessage }) {
         {isUser ? (
           <span className="whitespace-pre-wrap">{msg.content}</span>
         ) : (
-          <MarkdownContent>{msg.content}</MarkdownContent>
+          <>
+            {msg.content && <MarkdownContent>{msg.content}</MarkdownContent>}
+            {isStreaming && (
+              <span
+                className="ml-0.5 inline-block h-3 w-0.5 animate-pulse align-middle"
+                style={{ backgroundColor: theme.accent }}
+                aria-hidden="true"
+              />
+            )}
+          </>
         )}
-        {!isUser && msg.source && msg.source !== "faq" && (
+        {!isUser && !isStreaming && msg.source && msg.source !== "faq" && (
           <SourceTag source={msg.source} />
         )}
       </div>

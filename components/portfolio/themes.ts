@@ -65,9 +65,9 @@ export interface ThemePalette {
   comment: string         // // comment colour in mocked source views
 }
 
-const aahanaDark: ThemePalette = {
-  id: "aahana-dark",
-  name: "Aahana Dark",
+const lucaDark: ThemePalette = {
+  id: "luca-dark",
+  name: "Luca Dark",
   isDark: true,
   background: "#1E1E1E",
   sidebar: "#1A1A1A",
@@ -418,7 +418,7 @@ const solarizedDark: ThemePalette = {
 }
 
 export const themes: Record<string, ThemePalette> = {
-  [aahanaDark.id]: aahanaDark,
+  [lucaDark.id]: lucaDark,
   [dracula.id]: dracula,
   [monokai.id]: monokai,
   [oneDarkPro.id]: oneDarkPro,
@@ -429,7 +429,7 @@ export const themes: Record<string, ThemePalette> = {
 }
 
 export type ThemeId =
-  | "aahana-dark"
+  | "luca-dark"
   | "dracula"
   | "monokai"
   | "one-dark-pro"
@@ -438,9 +438,9 @@ export type ThemeId =
   | "nord"
   | "solarized-dark"
 
-export const defaultThemeId: ThemeId = "aahana-dark"
+export const defaultThemeId: ThemeId = "luca-dark"
 export const themeList: ThemePalette[] = [
-  aahanaDark,
+  lucaDark,
   dracula,
   monokai,
   oneDarkPro,

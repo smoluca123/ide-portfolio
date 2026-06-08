@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels"
 import { X } from "lucide-react"
 import { ThemeProvider, useTheme } from "./theme-context"
@@ -28,19 +28,7 @@ import { useKeybindings } from "@/hooks/use-keybindings"
 import { useURLState } from "@/hooks/use-url-state"
 import { withAlpha } from "./themes"
 import { portfolio } from "@/lib/portfolio"
-import type { Tab } from "./editor-tabs"
-
-const allTabs: Tab[] = [
-  { name: "Welcome.md",      ext: "md"   },
-  { name: "home.tsx",        ext: "tsx"  },
-  { name: "about.html",      ext: "html" },
-  { name: "projects.js",     ext: "js"   },
-  { name: "skills.json",     ext: "json" },
-  { name: "experience.ts",   ext: "ts"   },
-  { name: "contact.css",     ext: "css"  },
-  { name: "README.md",       ext: "md"   },
-  { name: "Resume.pdf",      ext: "pdf"  },
-]
+import { useIDEStore, ALL_TABS } from "@/lib/store/ide-store"
 
 export function IDELayout() {
   return (
@@ -56,18 +44,46 @@ function IDELayoutInner() {
   const isMdUp = useMediaQuery("(min-width: 768px)")
   const { getURLState, setURLState } = useURLState()
 
-  const [activeTab, setActiveTab] = useState("explorer")
-  const [activeFile, setActiveFile] = useState("Welcome.md")
-  const [openTabs, setOpenTabs] = useState<Tab[]>([allTabs[0]]) // Start with Welcome only
-  const [showExplorer, setShowExplorer] = useState(false)
-  const [showCopilot, setShowCopilot] = useState(false)
-  const [showSearch, setShowSearch] = useState(false)
-  const [showTerminal, setShowTerminal] = useState(true)
-  const [isTerminalMinimized, setIsTerminalMinimized] = useState(false)
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
-  const [sourceControlOpen, setSourceControlOpen] = useState(false)
-  const [hasSeenWelcome, setHasSeenWelcome] = useState(false)
+  // IDE UI/file state lives in the Zustand store. This component owns only the
+  // wiring to Next.js (URL sync), the media-query-driven defaults, and layout.
+  const activeTab = useIDEStore((s) => s.activeTab)
+  const activeFile = useIDEStore((s) => s.activeFile)
+  const openTabs = useIDEStore((s) => s.openTabs)
+  const showExplorer = useIDEStore((s) => s.showExplorer)
+  const showCopilot = useIDEStore((s) => s.showCopilot)
+  const showSearch = useIDEStore((s) => s.showSearch)
+  const showTerminal = useIDEStore((s) => s.showTerminal)
+  const isTerminalMinimized = useIDEStore((s) => s.isTerminalMinimized)
+  const commandPaletteOpen = useIDEStore((s) => s.commandPaletteOpen)
+  const sourceControlOpen = useIDEStore((s) => s.sourceControlOpen)
+
+  const setActiveTab = useIDEStore((s) => s.setActiveTab)
+  const reorderTabs = useIDEStore((s) => s.reorderTabs)
+  const setShowExplorer = useIDEStore((s) => s.setShowExplorer)
+  const setShowCopilot = useIDEStore((s) => s.setShowCopilot)
+  const setShowSearch = useIDEStore((s) => s.setShowSearch)
+  const setShowTerminal = useIDEStore((s) => s.setShowTerminal)
+  const setIsTerminalMinimized = useIDEStore((s) => s.toggleTerminalMinimized)
+  const setCommandPaletteOpen = useIDEStore((s) => s.setCommandPaletteOpen)
+  const toggleCommandPalette = useIDEStore((s) => s.toggleCommandPalette)
+  const setSourceControlOpen = useIDEStore((s) => s.setSourceControlOpen)
+  const setHasSeenWelcome = useIDEStore((s) => s.setHasSeenWelcome)
+  const openFile = useIDEStore((s) => s.openFile)
+  const closeTab = useIDEStore((s) => s.closeTab)
+  const setIsLgUp = useIDEStore((s) => s.setIsLgUp)
+  const toggleExplorer = useIDEStore((s) => s.toggleExplorer)
+  const toggleCopilotStore = useIDEStore((s) => s.toggleCopilot)
+  const toggleTerminalStore = useIDEStore((s) => s.toggleTerminal)
+  const toggleSearchStore = useIDEStore((s) => s.toggleSearch)
+  const handleActivityChangeStore = useIDEStore((s) => s.handleActivityChange)
+
   const gitButtonRef = useRef<HTMLButtonElement>(null)
+
+  // Keep the store's breakpoint flag in sync so store actions (e.g. openFile)
+  // can decide whether to auto-close the mobile drawer.
+  useEffect(() => {
+    setIsLgUp(isLgUp)
+  }, [isLgUp, setIsLgUp])
 
   // Initialize from URL on mount
   useEffect(() => {
@@ -79,18 +95,18 @@ function IDELayoutInner() {
 
     // Apply URL state if present
     if (urlState.file) {
-      const tab = allTabs.find((t) => t.name === urlState.file)
+      const tab = ALL_TABS.find((t) => t.name === urlState.file)
       if (tab) {
-        setActiveFile(urlState.file)
-        setOpenTabs((prev) => {
-          if (prev.some((t) => t.name === urlState.file)) return prev
-          return [...prev, tab]
-        })
+        const current = useIDEStore.getState().openTabs
+        const nextTabs = current.some((t) => t.name === urlState.file)
+          ? current
+          : [...current, tab]
+        useIDEStore.getState().hydrateFromURL({ activeFile: urlState.file, openTabs: nextTabs })
       }
     } else if (welcomed) {
       // If not first time, start with home instead of welcome
-      setActiveFile("home.tsx")
-      setOpenTabs([allTabs.find((t) => t.name === "home.tsx")!])
+      const homeTab = ALL_TABS.find((t) => t.name === "home.tsx")!
+      useIDEStore.getState().hydrateFromURL({ activeFile: "home.tsx", openTabs: [homeTab] })
     }
 
     if (urlState.theme) {
@@ -144,72 +160,29 @@ function IDELayoutInner() {
   }, [isLgUp, getURLState])
 
   const handleFileSelect = (file: string) => {
-    // Mark welcome as seen when navigating away from it
-    if (file !== "Welcome.md" && !hasSeenWelcome) {
-      localStorage.setItem("portfolio-welcomed", "true")
-      setHasSeenWelcome(true)
-    }
-
-    setActiveFile(file)
-    setOpenTabs((prev) => {
-      if (prev.some((t) => t.name === file)) return prev
-      const tab = allTabs.find((t) => t.name === file)
-      if (tab) return [...prev, tab]
-      return prev
-    })
-    // On mobile, picking a file should close the drawer.
-    if (!isLgUp) {
-      setShowExplorer(false)
-      setShowSearch(false)
-    }
+    openFile(file)
   }
 
   const handleCloseTab = (name: string) => {
-    setOpenTabs((prev) => {
-      const updated = prev.filter((t) => t.name !== name)
-      if (activeFile === name && updated.length > 0) {
-        setActiveFile(updated[updated.length - 1].name)
-      }
-      return updated
-    })
+    closeTab(name)
   }
 
   // Ctrl+P / Ctrl+B / Ctrl+L / Ctrl+` / Ctrl+Shift+F — toggles for the IDE chrome.
-  // All keybindings live in `hooks/use-keybindings.ts`; this layout owns
-  // the panel state so it provides the handlers.
+  // All keybindings live in `hooks/use-keybindings.ts`; the store owns the
+  // panel state so handlers just call store actions.
   useKeybindings({
-    togglePalette: () => setCommandPaletteOpen((prev) => !prev),
-    toggleExplorer: () => setShowExplorer((prev) => !prev),
-    toggleCopilot: () => {
-      setShowCopilot((prev) => !prev)
-      setActiveTab("ai")
-    },
-    toggleTerminal: () => {
-      setShowTerminal((prev) => !prev)
-      setIsTerminalMinimized(false)
-    },
+    togglePalette: toggleCommandPalette,
+    toggleExplorer: toggleExplorer,
+    toggleCopilot: toggleCopilotStore,
+    toggleTerminal: toggleTerminalStore,
     toggleSearch: () => {
-      setShowSearch((prev) => !prev)
+      toggleSearchStore()
       setActiveTab("search")
     },
   })
 
   const handleActivityChange = (tab: string) => {
-    if (tab === "explorer") {
-      setShowExplorer((prev) => !prev)
-      if (showSearch) setShowSearch(false)
-    } else if (tab === "search") {
-      setShowSearch((prev) => !prev)
-      if (showExplorer) setShowExplorer(false)
-    } else if (tab === "ai") {
-      setShowCopilot((prev) => !prev)
-    } else if (tab === "terminal") {
-      setShowTerminal((prev) => !prev)
-      setIsTerminalMinimized(false)
-    } else if (tab === "git") {
-      return
-    }
-    setActiveTab(tab)
+    handleActivityChangeStore(tab as any)
   }
 
   // On large screens the panels are docked and resizable.
@@ -284,27 +257,33 @@ function IDELayoutInner() {
                   onTabChange={handleFileSelect}
                   tabs={openTabs}
                   onCloseTab={handleCloseTab}
-                  onReorderTabs={setOpenTabs}
+                  onReorderTabs={reorderTabs}
                 />
-                {isMdUp && (
+                {isMdUp && openTabs.length > 0 && (
                   <Breadcrumbs path={[portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-'), "src", activeFile]} />
                 )}
-                {activeFile === "Welcome.md" && <WelcomeContent onFileSelect={handleFileSelect} />}
-                {activeFile === "home.tsx" && <HomeContent onFileSelect={handleFileSelect} />}
-                {activeFile === "experience.ts" && <ExperienceContent />}
-                {activeFile === "about.html" && <AboutContent />}
-                {activeFile === "projects.js" && <ProjectsContent />}
-                {activeFile === "skills.json" && <SkillsContent />}
-                {activeFile === "contact.css" && <ContactContent />}
-                {activeFile === "README.md" && <ReadmeContent />}
-                {activeFile === "Resume.pdf" && <ResumeContent />}
+                {openTabs.length === 0 ? (
+                  <EmptyEditor accent={theme.subtle} />
+                ) : (
+                  <>
+                    {activeFile === "Welcome.md" && <WelcomeContent onFileSelect={handleFileSelect} />}
+                    {activeFile === "home.tsx" && <HomeContent onFileSelect={handleFileSelect} />}
+                    {activeFile === "experience.ts" && <ExperienceContent />}
+                    {activeFile === "about.html" && <AboutContent />}
+                    {activeFile === "projects.js" && <ProjectsContent />}
+                    {activeFile === "skills.json" && <SkillsContent />}
+                    {activeFile === "contact.css" && <ContactContent />}
+                    {activeFile === "README.md" && <ReadmeContent />}
+                    {activeFile === "Resume.pdf" && <ResumeContent />}
+                  </>
+                )}
               </div>
 
               {showTerminal && !isTerminalMinimized && (
                 <Terminal
                   onClose={() => setShowTerminal(false)}
                   isMinimized={isTerminalMinimized}
-                  onToggleMinimize={() => setIsTerminalMinimized((prev) => !prev)}
+                  onToggleMinimize={setIsTerminalMinimized}
                 />
               )}
             </div>
@@ -360,6 +339,26 @@ function IDELayoutInner() {
       </div>
 
       <StatusBar />
+    </div>
+  )
+}
+
+/**
+ * Shown in the editor area when every tab has been closed — mirrors VS Code's
+ * empty editor group with a hint to reopen files via the command palette.
+ */
+function EmptyEditor({ accent }: { accent: string }) {
+  return (
+    <div className="flex flex-1 select-none flex-col items-center justify-center gap-2 p-8 text-center">
+      <p className="font-mono text-[13px]" style={{ color: accent }}>
+        No open editors
+      </p>
+      <p className="font-mono text-[11px]" style={{ color: accent }}>
+        Open a file from the Explorer or press{" "}
+        <kbd className="rounded-sm border px-1 py-0.5" style={{ borderColor: accent }}>
+          Ctrl+P
+        </kbd>
+      </p>
     </div>
   )
 }

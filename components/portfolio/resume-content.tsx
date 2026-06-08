@@ -4,12 +4,14 @@ import { Download, FileText, ExternalLink } from "lucide-react"
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
 import { portfolio } from "@/lib/portfolio"
+import { trackResumeDownload } from "@/lib/analytics"
 
 export function ResumeContent() {
   const { theme } = useTheme()
   const fileName = `${portfolio.identity.fullName.replace(/\s+/g, '_')}_Resume.pdf`
 
   const handleDownload = () => {
+    trackResumeDownload()
     // Create a mock download link
     const link = document.createElement("a")
     link.href = `/${fileName}` // User will replace this

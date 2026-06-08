@@ -5,11 +5,42 @@ import { X, ChevronUp, ChevronDown, TerminalSquare, AlertCircle, FileText } from
 import { useTheme } from "./theme-context"
 import { ThemePicker } from "./theme-picker"
 import { portfolio } from "@/lib/portfolio"
+import { useIDEStore, ALL_TABS } from "@/lib/store/ide-store"
 
 interface HistoryEntry {
   type: "command" | "output" | "error" | "success" | "info"
   content: string
   timestamp?: Date
+}
+
+/**
+ * Friendly aliases → real file names, so `open projects` works as well as
+ * `open projects.js`. Resolution is case-insensitive and also matches the full
+ * file name or its base (name without extension).
+ */
+const FILE_ALIASES: Record<string, string> = {
+  home: "home.tsx",
+  about: "about.html",
+  projects: "projects.js",
+  skills: "skills.json",
+  experience: "experience.ts",
+  exp: "experience.ts",
+  contact: "contact.css",
+  readme: "README.md",
+  resume: "Resume.pdf",
+  cv: "Resume.pdf",
+  welcome: "Welcome.md",
+}
+
+/** Resolve a user-typed file argument to a real tab name, or null. */
+function resolveFile(arg: string): string | null {
+  if (!arg) return null
+  const q = arg.toLowerCase()
+  if (FILE_ALIASES[q]) return FILE_ALIASES[q]
+  const byFull = ALL_TABS.find((t) => t.name.toLowerCase() === q)
+  if (byFull) return byFull.name
+  const byBase = ALL_TABS.find((t) => t.name.toLowerCase().replace(/\.[^.]+$/, "") === q)
+  return byBase ? byBase.name : null
 }
 
 const COMMANDS: Record<string, { description: string; output: string | string[] }> = {
@@ -24,7 +55,19 @@ const COMMANDS: Record<string, { description: string; output: string | string[] 
       "  skills    - View technical skills",
       "  projects  - List featured projects",
       "  contact   - Get contact information",
-      "  theme     - Cycle to the next colour theme",
+      "",
+      "Navigation (controls the IDE):",
+      "",
+      "  ls            - List files in the workspace",
+      "  open <file>   - Open a file in the editor (e.g. open projects)",
+      "  cat <file>    - Alias for open",
+      "  goto <file>   - Alias for open",
+      "  close [all]   - Close the active tab (or all tabs)",
+      "  explorer      - Toggle the file explorer",
+      "  search        - Toggle the search panel",
+      "  copilot       - Toggle the AI assistant",
+      "  theme <name>  - Switch theme (try: theme list)",
+      "",
       "  whoami    - Display current user",
       "  pwd       - Print working directory",
       "  date      - Display current date and time",
@@ -99,6 +142,38 @@ const COMMANDS: Record<string, { description: string; output: string | string[] 
     description: "Cycle theme",
     output: "",
   },
+  ls: {
+    description: "List files in the workspace",
+    output: "",
+  },
+  open: {
+    description: "Open a file in the editor",
+    output: "",
+  },
+  cat: {
+    description: "Open a file in the editor",
+    output: "",
+  },
+  goto: {
+    description: "Open a file in the editor",
+    output: "",
+  },
+  close: {
+    description: "Close the active tab",
+    output: "",
+  },
+  explorer: {
+    description: "Toggle the file explorer",
+    output: "",
+  },
+  search: {
+    description: "Toggle the search panel",
+    output: "",
+  },
+  copilot: {
+    description: "Toggle the AI assistant",
+    output: "",
+  },
   clear: {
     description: "Clear terminal",
     output: "",
@@ -109,7 +184,7 @@ const COMMANDS: Record<string, { description: string; output: string | string[] 
   },
 }
 
-const SUGGESTIONS = ["help", "about", "skills", "projects", "contact", "theme"]
+const SUGGESTIONS = ["help", "ls", "open projects", "theme dracula", "copilot"]
 
 interface TerminalProps {
   onClose?: () => void
@@ -118,7 +193,13 @@ interface TerminalProps {
 }
 
 export function Terminal({ onClose, isMinimized = false, onToggleMinimize }: TerminalProps) {
-  const { theme, cycleTheme } = useTheme()
+  const { theme, cycleTheme, setTheme, themes } = useTheme()
+  const openFile = useIDEStore((s) => s.openFile)
+  const closeTab = useIDEStore((s) => s.closeTab)
+  const closeAllTabs = useIDEStore((s) => s.closeAllTabs)
+  const toggleExplorer = useIDEStore((s) => s.toggleExplorer)
+  const toggleSearch = useIDEStore((s) => s.toggleSearch)
+  const toggleCopilot = useIDEStore((s) => s.toggleCopilot)
   const [history, setHistory] = useState<HistoryEntry[]>([
     { type: "success", content: "Welcome! Type 'help' to see available commands." },
   ])
@@ -146,42 +227,133 @@ export function Terminal({ onClose, isMinimized = false, onToggleMinimize }: Ter
   }, [isMinimized])
 
   const executeCommand = (cmd: string) => {
-    const trimmed = cmd.trim().toLowerCase()
+    const raw = cmd.trim()
     setHistory((prev) => [...prev, { type: "command", content: `$ ${cmd}` }])
-    if (trimmed) {
-      setCommandHistory((prev) => [...prev.filter((c) => c !== trimmed), trimmed])
+    if (raw) {
+      setCommandHistory((prev) => [...prev.filter((c) => c !== raw), raw])
     }
     setHistoryIndex(-1)
 
-    if (!trimmed) return
+    if (!raw) return
 
-    if (trimmed === "clear") {
+    // Append one or more output lines in a single state update.
+    const print = (lines: HistoryEntry | HistoryEntry[]) =>
+      setHistory((prev) => [...prev, ...(Array.isArray(lines) ? lines : [lines])])
+
+    // Split into base command + arguments (command is case-insensitive).
+    const parts = raw.split(/\s+/)
+    const base = parts[0].toLowerCase()
+    const args = parts.slice(1)
+    const arg = args.join(" ")
+
+    if (base === "clear") {
       setHistory([])
       return
     }
 
-    if (trimmed === "exit") {
-      setHistory((prev) => [...prev, { type: "output", content: "Closing terminal..." }])
+    if (base === "exit") {
+      print({ type: "output", content: "Closing terminal..." })
       setTimeout(() => onClose?.(), 500)
       return
     }
 
-    if (trimmed === "theme") {
-      cycleTheme()
-      setHistory((prev) => [
-        ...prev,
-        { type: "success", content: `Theme cycled` },
+    if (base === "date") {
+      print({ type: "output", content: new Date().toLocaleString() })
+      return
+    }
+
+    // --- IDE control commands ---
+
+    if (base === "ls") {
+      print([
+        { type: "info", content: "Files in workspace:" },
+        { type: "output", content: "" },
+        ...ALL_TABS.map((t) => ({ type: "output" as const, content: `  ${t.name}` })),
       ])
       return
     }
 
-    if (trimmed === "date") {
-      const now = new Date()
-      setHistory((prev) => [...prev, { type: "output", content: now.toLocaleString() }])
+    if (base === "open" || base === "cat" || base === "goto") {
+      if (!arg) {
+        print({ type: "error", content: `Usage: ${base} <file>. Try 'ls' to list files.` })
+        return
+      }
+      const file = resolveFile(arg)
+      if (!file) {
+        print({ type: "error", content: `File not found: ${arg}. Try 'ls' to list files.` })
+        return
+      }
+      openFile(file)
+      print({ type: "success", content: `Opened ${file}` })
       return
     }
 
-    const command = COMMANDS[trimmed]
+    if (base === "close") {
+      if (args[0]?.toLowerCase() === "all") {
+        closeAllTabs()
+        print({ type: "success", content: "Closed all tabs" })
+      } else {
+        const active = useIDEStore.getState().activeFile
+        const openCount = useIDEStore.getState().openTabs.length
+        if (openCount === 0) {
+          print({ type: "error", content: "No open tabs to close." })
+        } else {
+          closeTab(active)
+          print({ type: "success", content: `Closed ${active}` })
+        }
+      }
+      return
+    }
+
+    if (base === "explorer" || base === "sidebar") {
+      toggleExplorer()
+      print({ type: "success", content: "Toggled file explorer" })
+      return
+    }
+
+    if (base === "search") {
+      toggleSearch()
+      print({ type: "success", content: "Toggled search panel" })
+      return
+    }
+
+    if (base === "copilot" || base === "ai") {
+      toggleCopilot()
+      print({ type: "success", content: "Toggled AI assistant" })
+      return
+    }
+
+    if (base === "theme") {
+      // `theme list` → show options; `theme <name>` → set; `theme` → cycle.
+      if (args[0]?.toLowerCase() === "list") {
+        print([
+          { type: "info", content: "Available themes:" },
+          { type: "output", content: "" },
+          ...themes.map((t) => ({ type: "output" as const, content: `  ${t.id}  (${t.name})` })),
+          { type: "output", content: "" },
+          { type: "output", content: "Usage: theme <id>   e.g. theme dracula" },
+        ])
+        return
+      }
+      if (arg) {
+        const q = arg.toLowerCase()
+        const match = themes.find(
+          (t) => t.id.toLowerCase() === q || t.name.toLowerCase() === q,
+        )
+        if (!match) {
+          print({ type: "error", content: `Theme not found: ${arg}. Try 'theme list'.` })
+          return
+        }
+        setTheme(match.id as Parameters<typeof setTheme>[0])
+        print({ type: "success", content: `Theme set to ${match.name}` })
+        return
+      }
+      cycleTheme()
+      print({ type: "success", content: "Theme cycled" })
+      return
+    }
+
+    const command = COMMANDS[base]
     if (command) {
       const output = Array.isArray(command.output) ? command.output : [command.output]
       output.forEach((line) => {
@@ -194,7 +366,7 @@ export function Terminal({ onClose, isMinimized = false, onToggleMinimize }: Ter
         ...prev,
         {
           type: "error",
-          content: `Command not found: ${trimmed}. Type 'help' for available commands.`,
+          content: `Command not found: ${base}. Type 'help' for available commands.`,
         },
       ])
     }

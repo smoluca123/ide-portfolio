@@ -105,7 +105,22 @@
       "techStack": ["Next.js", "React", "PostgreSQL", "Tailwind CSS", "Stripe", "Vercel"],
       "githubUrl": "https://github.com",
       "liveUrl": "https://lingshome.com",
-      "thumbnail": "Dashboard with service listings and booking management"
+      "thumbnail": "Dashboard with service listings and booking management",
+      "year": "2024",
+      "role": "Lead Fullstack Developer",
+      "status": "Live",
+      "longDescription": "Ling's Home is an end-to-end platform that lets small service businesses manage bookings, schedules, payments, and customers from a single dashboard. I owned the architecture, the booking engine, and the Stripe payment flow from design through production.",
+      "outcomes": [
+        "Onboarded 100+ businesses in the first 6 months",
+        "Reduced no-show rate by ~30% with automated reminders",
+        "Processed payments end-to-end via Stripe with zero manual reconciliation"
+      ],
+      "features": [
+        "Real-time booking and scheduling engine",
+        "Stripe-backed payments and invoicing",
+        "Role-based dashboards for owners and staff",
+        "Automated email/SMS reminders"
+      ]
     },
     {
       "id": "2",
@@ -115,7 +130,22 @@
       "techStack": ["FastAPI", "Python", "React", "PostgreSQL", "GenAI", "Docker", "AWS"],
       "githubUrl": "https://github.com",
       "liveUrl": "https://eduvance.ai",
-      "thumbnail": "Learning dashboard with AI-powered course recommendations"
+      "thumbnail": "Learning dashboard with AI-powered course recommendations",
+      "year": "2024",
+      "role": "Backend & AI Engineer",
+      "status": "Live",
+      "longDescription": "EduVance adapts learning paths to each student using a RAG-based recommendation engine. I built the FastAPI backend, the retrieval pipeline over course content, and the GenAI integration that generates explanations and practice questions on demand.",
+      "outcomes": [
+        "Improved lesson completion rate by 45% in pilot cohorts",
+        "Served personalized recommendations with sub-200ms latency",
+        "Cut content-authoring time with AI-assisted question generation"
+      ],
+      "features": [
+        "RAG pipeline over course material",
+        "Adaptive learning-path engine",
+        "GenAI explanations and practice generation",
+        "Containerized deployment on AWS"
+      ]
     },
     {
       "id": "3",
@@ -125,7 +155,22 @@
       "techStack": ["Next.js", "React", "PostgreSQL", "D3.js", "Tailwind CSS"],
       "githubUrl": "https://github.com",
       "liveUrl": "https://dashboard.example.com",
-      "thumbnail": "Analytics dashboard with real-time metrics and charts"
+      "thumbnail": "Analytics dashboard with real-time metrics and charts",
+      "year": "2023",
+      "role": "Frontend Developer",
+      "status": "Live",
+      "longDescription": "A real-time dashboard that surfaces Core Web Vitals, technical SEO health, and traffic analytics in one place. I focused on the data-visualization layer with D3.js and on shipping a fast, accessible UI.",
+      "outcomes": [
+        "Improved tracked sites' page load times by up to 60%",
+        "Consolidated 4 separate tools into a single dashboard",
+        "Surfaced SEO regressions before they hit production"
+      ],
+      "features": [
+        "Live Core Web Vitals monitoring",
+        "Interactive D3.js charts",
+        "Technical SEO audit reports",
+        "Historical trend analysis"
+      ]
     },
     {
       "id": "4",
@@ -135,7 +180,22 @@
       "techStack": ["React", "Storybook", "TypeScript", "Tailwind CSS", "npm"],
       "githubUrl": "https://github.com",
       "liveUrl": "https://ui-library.example.com",
-      "thumbnail": "Collection of reusable UI components and design tokens"
+      "thumbnail": "Collection of reusable UI components and design tokens",
+      "year": "2023",
+      "role": "Maintainer",
+      "status": "Live",
+      "longDescription": "A typed, accessible component library published to npm and documented in Storybook. It standardizes design tokens and patterns across multiple product teams.",
+      "outcomes": [
+        "Reduced UI development time by ~40%",
+        "Adopted across 5+ internal projects",
+        "Shipped WCAG-compliant, fully typed components"
+      ],
+      "features": [
+        "40+ accessible React components",
+        "Design tokens and theming",
+        "Storybook documentation",
+        "Published and versioned on npm"
+      ]
     },
     {
       "id": "5",
@@ -145,7 +205,22 @@
       "techStack": ["Next.js", "PostgreSQL", "Stripe", "Vercel", "Redis"],
       "githubUrl": "https://github.com",
       "liveUrl": "https://ecommerce.example.com",
-      "thumbnail": "E-commerce product showcase and checkout flow"
+      "thumbnail": "E-commerce product showcase and checkout flow",
+      "year": "2022",
+      "role": "Fullstack Developer",
+      "status": "Archived",
+      "longDescription": "A full e-commerce platform with catalog, cart, checkout, and inventory sync. I implemented the transaction flow with Stripe and used Redis to keep inventory consistent under concurrent purchases.",
+      "outcomes": [
+        "Handled concurrent checkouts without overselling",
+        "Integrated Stripe for the full payment lifecycle",
+        "Kept inventory in sync in real time with Redis"
+      ],
+      "features": [
+        "Product catalog and search",
+        "Cart and Stripe checkout",
+        "Real-time inventory sync with Redis",
+        "Order management"
+      ]
     }
   ],
   "skills": {

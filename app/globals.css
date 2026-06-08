@@ -1,60 +1,60 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Aahana Dark Portfolio - Default Theme */
-  --background: #1E1E1E;
-  --foreground: #FFFFFF;
-  --card: #1E1E1E;
-  --card-foreground: #FFFFFF;
+  /* Luca Dark Portfolio - Default Theme */
+  --background: #1e1e1e;
+  --foreground: #ffffff;
+  --card: #1e1e1e;
+  --card-foreground: #ffffff;
   --popover: #262626;
-  --popover-foreground: #FFFFFF;
-  --primary: #FFFFFF;
-  --primary-foreground: #1E1E1E;
-  --secondary: #CCCCCC;
-  --secondary-foreground: #1E1E1E;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #1e1e1e;
+  --secondary: #cccccc;
+  --secondary-foreground: #1e1e1e;
   --muted: #262626;
-  --muted-foreground: #CCCCCC;
-  --accent: #2DA8FF;
-  --accent-foreground: #1E1E1E;
-  --destructive: #FF5A5F;
-  --destructive-foreground: #FFFFFF;
+  --muted-foreground: #cccccc;
+  --accent: #2da8ff;
+  --accent-foreground: #1e1e1e;
+  --destructive: #ff5a5f;
+  --destructive-foreground: #ffffff;
   --border: #374151;
   --input: #262626;
-  --ring: #2DA8FF;
+  --ring: #2da8ff;
   --radius: 0.25rem;
 
   /* Sidebar */
-  --sidebar: #1A1A1A;
-  --sidebar-foreground: #CCCCCC;
-  --sidebar-primary: #2DA8FF;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #cccccc;
+  --sidebar-primary: #2da8ff;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #262626;
-  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #374151;
-  --sidebar-ring: #2DA8FF;
+  --sidebar-ring: #2da8ff;
 
-  /* Aahana Dark custom tokens */
+  /* Luca Dark custom tokens */
   --surface: #262626;
-  --accent-pink: #FF61D8;
-  --accent-cyan: #49D0C3;
-  --accent-blue: #2DA8FF;
-  --accent-electric: #5EC8FF;
-  --title-bar: #1A1A1A;
-  --tab-active: #1E1E1E;
-  --tab-inactive: #1A1A1A;
+  --accent-pink: #ff61d8;
+  --accent-cyan: #49d0c3;
+  --accent-blue: #2da8ff;
+  --accent-electric: #5ec8ff;
+  --title-bar: #1a1a1a;
+  --tab-active: #1e1e1e;
+  --tab-inactive: #1a1a1a;
   --status-bar: #0078d4;
 
   /* Terminal colors */
-  --terminal-bg: #1E1E1E;
-  --terminal-header: #1A1A1A;
-  --terminal-text: #CCCCCC;
-  --terminal-success: #4EC994;
-  --terminal-error: #FF5A5F;
-  --terminal-prompt-user: #4EC994;
-  --terminal-prompt-host: #2DA8FF;
+  --terminal-bg: #1e1e1e;
+  --terminal-header: #1a1a1a;
+  --terminal-text: #cccccc;
+  --terminal-success: #4ec994;
+  --terminal-error: #ff5a5f;
+  --terminal-prompt-user: #4ec994;
+  --terminal-prompt-host: #2da8ff;
   --terminal-comment: #808080;
 }
 
@@ -62,13 +62,15 @@
  * NOTE: Theme switching is handled at runtime by `ThemeProvider`
  * (see `components/portfolio/theme-context.tsx`), which writes CSS
  * variables onto <html>. The `:root` block above is the SSR default
- * (Aahana Dark) and is overridden once the provider hydrates.
+ * (Luca Dark) and is overridden once the provider hydrates.
  */
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
-  --font-serif: 'Syne', system-ui, sans-serif;
+  --font-sans: "Geist", "Geist Fallback", system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono", "Geist Mono", "Geist Mono Fallback", ui-monospace,
+    monospace;
+  --font-serif: "Syne", system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -138,5 +140,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
 }
-
-

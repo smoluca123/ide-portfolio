@@ -4,13 +4,17 @@ import { Play, Keyboard, Coffee, Sparkles, FileText, Code2, Zap } from "lucide-r
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
 import { portfolio } from "@/lib/portfolio"
+import { useIDEStore } from "@/lib/store/ide-store"
 
 interface WelcomeContentProps {
+  /** Optional override; when omitted the component reads from the IDE store. */
   onFileSelect?: (file: string) => void
 }
 
 export function WelcomeContent({ onFileSelect }: WelcomeContentProps) {
   const { theme } = useTheme()
+  const openFile = useIDEStore((s) => s.openFile)
+  const handleSelect = onFileSelect ?? openFile
 
   // Use data from portfolio.json
   const recentFiles = [
@@ -88,7 +92,7 @@ export function WelcomeContent({ onFileSelect }: WelcomeContentProps) {
               {recentFiles.map((file) => (
                 <button
                   key={file.name}
-                  onClick={() => onFileSelect?.(file.name)}
+                  onClick={() => handleSelect(file.name)}
                   className="group flex w-full items-start gap-3 rounded-md border p-3 text-left transition-colors"
                   style={{
                     backgroundColor: theme.background,

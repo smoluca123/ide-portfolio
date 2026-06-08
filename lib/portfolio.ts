@@ -98,6 +98,19 @@ export interface Project {
   githubUrl: string
   liveUrl: string
   thumbnail: string
+  /** --- Optional case-study fields (used by the project detail view) --- */
+  /** Year or period the project was built, e.g. "2024". */
+  year?: string
+  /** Your role on the project, e.g. "Lead Developer". */
+  role?: string
+  /** Lifecycle status; drives the status badge colour. */
+  status?: "Live" | "In Progress" | "Archived"
+  /** Longer narrative shown at the top of the detail view. */
+  longDescription?: string
+  /** Measurable results / impact, e.g. "Cut load time by 60%". */
+  outcomes?: string[]
+  /** Notable features or scope bullets. */
+  features?: string[]
 }
 
 export interface Skill {

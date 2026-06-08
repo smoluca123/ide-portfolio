@@ -2,9 +2,20 @@
 
 import { useId } from "react"
 import { X } from "lucide-react"
+import { toast } from "sonner"
 import { useTheme } from "./theme-context"
 import type { ThemePalette } from "./themes"
 import { withAlpha } from "./themes"
+import { useIDEStore } from "@/lib/store/ide-store"
+import { absolutePath, relativePath } from "@/lib/file-paths"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 import {
   DndContext,
   PointerSensor,
@@ -44,6 +55,7 @@ const EXT_COLOR: Record<Tab["ext"], string> = {
   html: "#F97316",
   css:  "#569CD6",
   md:   "#519ABA",
+  pdf:  "#FF5A5F",
 }
 
 function TabFileIcon({ ext }: { ext: Tab["ext"] }) {
@@ -64,9 +76,35 @@ interface SortableTabProps {
   theme: ThemePalette
   onSelect: () => void
   onClose: (e: React.MouseEvent) => void
+  /** Close just this tab (used by the context menu). */
+  onCloseSelf: () => void
+  /** Position info so the context menu can enable/disable left/right actions. */
+  isFirst: boolean
+  isLast: boolean
+  isOnly: boolean
+  onCloseAll: () => void
+  onCloseOthers: () => void
+  onCloseLeft: () => void
+  onCloseRight: () => void
+  onReveal: () => void
 }
 
-function SortableTab({ tab, isActive, theme, onSelect, onClose }: SortableTabProps) {
+function SortableTab({
+  tab,
+  isActive,
+  theme,
+  onSelect,
+  onClose,
+  onCloseSelf,
+  isFirst,
+  isLast,
+  isOnly,
+  onCloseAll,
+  onCloseOthers,
+  onCloseLeft,
+  onCloseRight,
+  onReveal,
+}: SortableTabProps) {
   const {
     attributes,
     listeners,
@@ -88,62 +126,110 @@ function SortableTab({ tab, isActive, theme, onSelect, onClose }: SortableTabPro
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      onClick={onSelect}
-      className="group relative flex shrink-0 items-center gap-1.5 border-r px-3 transition-colors"
-      onMouseEnter={(e) => {
-        if (!isActive && !isDragging) {
-          e.currentTarget.style.backgroundColor = theme.surfaceHover
-          e.currentTarget.style.color = theme.foreground
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isActive && !isDragging) {
-          e.currentTarget.style.backgroundColor = theme.tabInactive
-          e.currentTarget.style.color = theme.muted
-        }
-      }}
-    >
-      {isActive && (
-        <span
-          className="absolute inset-x-0 top-0 h-[2px]"
-          style={{ backgroundColor: theme.tabActiveAccent }}
-        />
-      )}
-      <TabFileIcon ext={tab.ext} />
-      <span className="select-none whitespace-nowrap font-mono text-[12px]">
-        {tab.name}
-      </span>
-      <button
-        // Prevent dnd-kit from hijacking the close button click
-        onPointerDown={(e) => e.stopPropagation()}
-        onClick={onClose}
-        aria-label={`Close ${tab.name}`}
-        className="flex h-4 w-4 items-center justify-center rounded-sm transition-colors"
-        style={{
-          color: isActive ? theme.foreground : "transparent",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = theme.foreground
-          e.currentTarget.style.backgroundColor = withAlpha(theme.border, "80")
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = isActive ? theme.foreground : "transparent"
-          e.currentTarget.style.backgroundColor = "transparent"
-        }}
+    <ContextMenu>
+      <ContextMenuTrigger asChild>
+        <div
+          ref={setNodeRef}
+          style={style}
+          {...attributes}
+          {...listeners}
+          onClick={onSelect}
+          className="group relative flex shrink-0 items-center gap-1.5 border-r px-3 transition-colors"
+          onMouseEnter={(e) => {
+            if (!isActive && !isDragging) {
+              e.currentTarget.style.backgroundColor = theme.surfaceHover
+              e.currentTarget.style.color = theme.foreground
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isActive && !isDragging) {
+              e.currentTarget.style.backgroundColor = theme.tabInactive
+              e.currentTarget.style.color = theme.muted
+            }
+          }}
+        >
+          {isActive && (
+            <span
+              className="absolute inset-x-0 top-0 h-[2px]"
+              style={{ backgroundColor: theme.tabActiveAccent }}
+            />
+          )}
+          <TabFileIcon ext={tab.ext} />
+          <span className="select-none whitespace-nowrap font-mono text-[12px]">
+            {tab.name}
+          </span>
+          <button
+            // Prevent dnd-kit from hijacking the close button click
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={onClose}
+            aria-label={`Close ${tab.name}`}
+            className="flex h-4 w-4 items-center justify-center rounded-sm transition-colors"
+            style={{
+              color: isActive ? theme.foreground : "transparent",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = theme.foreground
+              e.currentTarget.style.backgroundColor = withAlpha(theme.border, "80")
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = isActive ? theme.foreground : "transparent"
+              e.currentTarget.style.backgroundColor = "transparent"
+            }}
+          >
+            <X className="h-3 w-3" />
+          </button>
+        </div>
+      </ContextMenuTrigger>
+      <ContextMenuContent
+        className="min-w-52 font-mono text-[12px]"
+        style={{ backgroundColor: theme.background, borderColor: theme.border }}
       >
-        <X className="h-3 w-3" />
-      </button>
-    </div>
+        <ContextMenuItem onSelect={onCloseSelf}>
+          Close
+          <ContextMenuShortcut>Ctrl+W</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem disabled={isOnly} onSelect={onCloseOthers}>
+          Close Others
+        </ContextMenuItem>
+        <ContextMenuItem disabled={isFirst} onSelect={onCloseLeft}>
+          Close to the Left
+        </ContextMenuItem>
+        <ContextMenuItem disabled={isLast} onSelect={onCloseRight}>
+          Close to the Right
+        </ContextMenuItem>
+        <ContextMenuItem onSelect={onCloseAll}>Close All</ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem
+          onSelect={() => {
+            navigator.clipboard?.writeText(absolutePath(tab.name))
+            toast.success("Path copied to clipboard")
+          }}
+        >
+          Copy Path
+          <ContextMenuShortcut>Ctrl+K Ctrl+C</ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem
+          onSelect={() => {
+            navigator.clipboard?.writeText(relativePath(tab.name))
+            toast.success("Relative path copied to clipboard")
+          }}
+        >
+          Copy Relative Path
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem onSelect={onReveal}>Reveal in Explorer</ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
   )
 }
 
 export function EditorTabs({ activeTab, onTabChange, tabs, onCloseTab, onReorderTabs }: EditorTabsProps) {
   const { theme } = useTheme()
+  const closeAllTabs = useIDEStore((s) => s.closeAllTabs)
+  const closeOtherTabs = useIDEStore((s) => s.closeOtherTabs)
+  const closeTabsToLeft = useIDEStore((s) => s.closeTabsToLeft)
+  const closeTabsToRight = useIDEStore((s) => s.closeTabsToRight)
+  const revealInExplorer = useIDEStore((s) => s.revealInExplorer)
   // Stable id for DndContext so dnd-kit's internal aria-describedby ids are
   // identical on server and client, avoiding hydration mismatches.
   const dndContextId = useId()
@@ -182,7 +268,7 @@ export function EditorTabs({ activeTab, onTabChange, tabs, onCloseTab, onReorder
         onDragEnd={handleDragEnd}
       >
         <SortableContext items={tabs.map((t) => t.name)} strategy={horizontalListSortingStrategy}>
-          {tabs.map((tab) => (
+          {tabs.map((tab, index) => (
             <SortableTab
               key={tab.name}
               tab={tab}
@@ -190,6 +276,15 @@ export function EditorTabs({ activeTab, onTabChange, tabs, onCloseTab, onReorder
               theme={theme}
               onSelect={() => onTabChange(tab.name)}
               onClose={(e) => closeTab(e, tab.name)}
+              onCloseSelf={() => onCloseTab(tab.name)}
+              isFirst={index === 0}
+              isLast={index === tabs.length - 1}
+              isOnly={tabs.length === 1}
+              onCloseAll={closeAllTabs}
+              onCloseOthers={() => closeOtherTabs(tab.name)}
+              onCloseLeft={() => closeTabsToLeft(tab.name)}
+              onCloseRight={() => closeTabsToRight(tab.name)}
+              onReveal={() => revealInExplorer(tab.name)}
             />
           ))}
         </SortableContext>

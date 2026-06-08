@@ -3,9 +3,19 @@
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import { toast } from "sonner"
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
 import { portfolio } from "@/lib/portfolio"
+import { useIDEStore } from "@/lib/store/ide-store"
+import { absolutePath, relativePath } from "@/lib/file-paths"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 
 export interface FileEntry {
   name: string
@@ -13,8 +23,9 @@ export interface FileEntry {
 }
 
 interface FileExplorerProps {
-  activeFile: string
-  onFileSelect: (file: string) => void
+  /** Optional overrides; when omitted the component reads from the IDE store. */
+  activeFile?: string
+  onFileSelect?: (file: string) => void
 }
 
 const files: FileEntry[] = [
@@ -67,9 +78,15 @@ function FileIcon({ ext }: { ext: FileEntry["ext"] }) {
   )
 }
 
-export function FileExplorer({ activeFile, onFileSelect }: FileExplorerProps) {
+export function FileExplorer({ activeFile: activeFileProp, onFileSelect }: FileExplorerProps) {
   const [open, setOpen] = useState(true)
   const { theme } = useTheme()
+  const storeActiveFile = useIDEStore((s) => s.activeFile)
+  const openFile = useIDEStore((s) => s.openFile)
+  const openTabs = useIDEStore((s) => s.openTabs)
+  const closeTab = useIDEStore((s) => s.closeTab)
+  const activeFile = activeFileProp ?? storeActiveFile
+  const handleSelect = onFileSelect ?? openFile
   const username = portfolio.identity.fullName.toLowerCase().replace(/\s+/g, '-')
 
   return (
@@ -115,37 +132,69 @@ export function FileExplorer({ activeFile, onFileSelect }: FileExplorerProps) {
         <div className="flex flex-col pl-2">
           {files.map((file) => {
             const isActive = activeFile === file.name
+            const isOpen = openTabs.some((t) => t.name === file.name)
             return (
-              <button
-                key={file.name}
-                onClick={() => onFileSelect(file.name)}
-                className={cn(
-                  "flex w-full items-center gap-2 rounded-sm px-3 py-[5px] text-left font-mono text-[12px] transition-colors",
-                )}
-                style={{
-                  backgroundColor: isActive ? theme.surface : "transparent",
-                  color: theme.foreground,
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = withAlpha(theme.surface, "60")
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = "transparent"
-                  }
-                }}
-              >
-                <FileIcon ext={file.ext} />
-                <span className="truncate">{file.name}</span>
-                {isActive && (
-                  <span
-                    className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: theme.tabActiveAccent }}
-                  />
-                )}
-              </button>
+              <ContextMenu key={file.name}>
+                <ContextMenuTrigger asChild>
+                  <button
+                    onClick={() => handleSelect(file.name)}
+                    className={cn(
+                      "flex w-full items-center gap-2 rounded-sm px-3 py-[5px] text-left font-mono text-[12px] transition-colors",
+                    )}
+                    style={{
+                      backgroundColor: isActive ? theme.surface : "transparent",
+                      color: theme.foreground,
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.backgroundColor = withAlpha(theme.surface, "60")
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.backgroundColor = "transparent"
+                      }
+                    }}
+                  >
+                    <FileIcon ext={file.ext} />
+                    <span className="truncate">{file.name}</span>
+                    {isActive && (
+                      <span
+                        className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full"
+                        style={{ backgroundColor: theme.tabActiveAccent }}
+                      />
+                    )}
+                  </button>
+                </ContextMenuTrigger>
+                <ContextMenuContent
+                  className="min-w-52 font-mono text-[12px]"
+                  style={{ backgroundColor: theme.background, borderColor: theme.border }}
+                >
+                  <ContextMenuItem onSelect={() => handleSelect(file.name)}>
+                    Open
+                  </ContextMenuItem>
+                  <ContextMenuItem disabled={!isOpen} onSelect={() => closeTab(file.name)}>
+                    Close
+                  </ContextMenuItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuItem
+                    onSelect={() => {
+                      navigator.clipboard?.writeText(absolutePath(file.name))
+                      toast.success("Path copied to clipboard")
+                    }}
+                  >
+                    Copy Path
+                  </ContextMenuItem>
+                  <ContextMenuItem
+                    onSelect={() => {
+                      navigator.clipboard?.writeText(relativePath(file.name))
+                      toast.success("Relative path copied to clipboard")
+                    }}
+                  >
+                    Copy Relative Path
+                  </ContextMenuItem>
+                </ContextMenuContent>
+              </ContextMenu>
             )
           })}
         </div>

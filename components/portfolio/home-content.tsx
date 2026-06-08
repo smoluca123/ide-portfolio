@@ -7,15 +7,19 @@ import { RichText } from "./rich-text"
 import { portfolio, type ThemeColorKey } from "@/lib/portfolio"
 import { TypeAnimation } from "react-type-animation"
 import { useMemo } from "react"
+import { useIDEStore } from "@/lib/store/ide-store"
 
 const { identity, hero, stats, socials } = portfolio
 
 interface HomeContentProps {
+  /** Optional override; when omitted the component reads from the IDE store. */
   onFileSelect?: (file: string) => void
 }
 
 export function HomeContent({ onFileSelect }: HomeContentProps) {
   const { theme } = useTheme()
+  const openFile = useIDEStore((s) => s.openFile)
+  const handleSelect = onFileSelect ?? openFile
 
   // Build the typing sequence: type each tagline, hold for ~2s, delete, repeat.
   // `react-type-animation` interleaves strings (to type) and numbers (delays
@@ -98,7 +102,7 @@ export function HomeContent({ onFileSelect }: HomeContentProps) {
           cursor={false}
           className="font-bold"
           style={{ color: theme.pink, display: "inline-block" }}
-          aria-label="Aahana's rotating tagline"
+          aria-label={`${identity.firstName}'s rotating tagline`}
         />
         <span
           className="animate-pulse"
@@ -130,7 +134,7 @@ export function HomeContent({ onFileSelect }: HomeContentProps) {
           return (
             <button
               key={cta.label}
-              onClick={() => file && onFileSelect?.(file)}
+              onClick={() => file && handleSelect(file)}
               className="flex items-center gap-2 rounded-sm border px-4 py-2 font-mono text-[12px] font-semibold transition-all hover:opacity-90"
               style={{
                 backgroundColor: isPrimary ? theme.accent : "transparent",

@@ -5,6 +5,7 @@ import { Search, FileText, X, Sparkles } from "lucide-react"
 import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
 import { portfolio } from "@/lib/portfolio"
+import { useIDEStore } from "@/lib/store/ide-store"
 
 interface SearchResult {
   file: string
@@ -14,12 +15,15 @@ interface SearchResult {
 }
 
 interface SearchViewProps {
+  /** Optional override; when omitted the component reads from the IDE store. */
   onFileSelect?: (file: string) => void
 }
 
 export function SearchView({ onFileSelect }: SearchViewProps) {
   const { theme } = useTheme()
   const [query, setQuery] = useState("")
+  const openFile = useIDEStore((s) => s.openFile)
+  const handleSelect = onFileSelect ?? openFile
 
   // Build search index from portfolio data
   const searchResults = useMemo(() => {
@@ -215,7 +219,7 @@ export function SearchView({ onFileSelect }: SearchViewProps) {
   }, [query])
 
   const handleResultClick = (file: string) => {
-    onFileSelect?.(file)
+    handleSelect(file)
   }
 
   return (
