@@ -1,6 +1,6 @@
 "use client"
 
-import { useId } from "react"
+import { useId, useEffect, useRef } from "react"
 import { X } from "lucide-react"
 import { toast } from "sonner"
 import { useTheme } from "./theme-context"
@@ -114,6 +114,14 @@ function SortableTab({
     isDragging,
   } = useSortable({ id: tab.name })
 
+  const localRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (isActive && localRef.current) {
+      localRef.current.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" })
+    }
+  }, [isActive])
+
   const style: React.CSSProperties = {
     transform: CSS.Translate.toString(transform),
     transition,
@@ -129,7 +137,10 @@ function SortableTab({
     <ContextMenu>
       <ContextMenuTrigger asChild>
         <div
-          ref={setNodeRef}
+          ref={(node) => {
+            setNodeRef(node)
+            if (node) localRef.current = node
+          }}
           style={style}
           {...attributes}
           {...listeners}

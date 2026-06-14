@@ -410,3 +410,16 @@ A: Hiện client-side substring, đủ cho dữ liệu nhỏ trong bundle. Dữ 
 - "File" trong IDE là render có điều kiện, không phải router thật (đánh đổi: đơn giản, nhưng mỗi file không có URL path riêng — bù lại bằng deep-linking qua query param).
 
 Thừa nhận hạn chế kèm hướng nâng cấp thường gây ấn tượng tốt hơn là khẳng định "không có nhược điểm".
+
+---
+
+## 13. Resume PDF Viewer
+
+File: `components/portfolio/resume-content.tsx`
+
+### Cơ chế
+
+- **Render PDF Preview:** Cung cấp giao diện xem trước CV với thiết kế thẻ (card) trực quan, hiển thị trạng thái availability và tóm tắt nhanh.
+- **Download logic:** Tích hợp nút tải xuống gọi trực tiếp đến file PDF tĩnh lưu trong thư mục `public/`. Giao diện có hiệu ứng hover mượt mà và hiển thị icon tải xuống để tăng trải nghiệm người dùng (UX).
+- **Dễ dàng thay thế:** Chỉ cần ghi đè file PDF mẫu trong thư mục `public/` bằng file CV thật của bạn (ví dụ `Aahana_Resume.pdf` hoặc tên tương ứng cấu hình trong code), toàn bộ luồng hiển thị và download sẽ tự động sử dụng file mới mà không cần can thiệp logic hay cấu trúc ứng dụng.
+- **Tích hợp File Explorer:** File được đặt trực tiếp trong danh sách thư mục và Command Palette (`Ctrl+P`), đồng nhất trải nghiệm như đang mở tài liệu hướng dẫn hoặc file code thực sự.
