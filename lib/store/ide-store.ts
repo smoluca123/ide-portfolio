@@ -184,8 +184,8 @@ export const useIDEStore = create<IDEStore>((set, get) => ({
   setActiveFile: (file) => set({ activeFile: file }),
 
   // ---- panels: toggle ----
-  toggleExplorer: () => set((s) => ({ showExplorer: !s.showExplorer })),
-  toggleSearch: () => set((s) => ({ showSearch: !s.showSearch })),
+  toggleExplorer: () => set((s) => ({ showExplorer: !s.showExplorer, ...(!s.showExplorer ? { showSearch: false } : {}) })),
+  toggleSearch: () => set((s) => ({ showSearch: !s.showSearch, ...(!s.showSearch ? { showExplorer: false } : {}) })),
   toggleCopilot: () => set((s) => ({ showCopilot: !s.showCopilot, activeTab: "ai" })),
   toggleTerminal: () =>
     set((s) => ({ showTerminal: !s.showTerminal, isTerminalMinimized: false })),
