@@ -38,188 +38,204 @@
     ]
   },
   "stats": [
-    { "value": "3+", "label": "YEARS" },
+    { "value": "1+", "label": "YEARS" },
     { "value": "10+", "label": "PROJECTS" },
     { "value": "∞", "label": "CURIOSITY" },
     { "value": "↑", "label": "ALWAYS LEARNING" }
   ],
   "socials": [
-    { "label": "GitHub", "icon": "github", "href": "#" },
-    { "label": "LinkedIn", "icon": "linkedin", "href": "#" },
-    { "label": "Medium", "icon": "globe", "href": "#" },
-    { "label": "Tableau", "icon": "bookOpen", "href": "#" },
-    { "label": "LeetCode", "icon": "code2", "href": "#" },
-    { "label": "Email", "icon": "mail", "href": "#" }
+    { "label": "GitHub", "icon": "github", "href": "https://github.com/smoluca123" },
+    { "label": "Facebook", "icon": "globe", "href": "https://www.facebook.com/LucaNN.Info/" },
+    { "label": "Website", "icon": "bookOpen", "href": "https://paindev.net" },
+    { "label": "Email", "icon": "mail", "href": "mailto:icaluca12@gmail.com" }
   ],
   "about": {
     "fileBanner": [
       "// about.html - Professional & Personal Story",
-      "// Fullstack Developer | Problem Solver | Coffee & Code Enthusiast"
+      "// Fresher Fullstack Developer | Problem Solver | Coffee & Code Enthusiast"
     ],
     "professionalSummary": [
-      "I'm a **fullstack developer** with **3+ years** of experience building high-performance web applications. My expertise spans from crafting seamless user interfaces to architecting scalable backend systems.",
-      "Specializing in **Next.js**, **React**, and **PostgreSQL**, I focus on technical SEO optimization and delivering products that prioritize user experience. I believe great software solves real problems elegantly."
+      "I'm a **fresher fullstack developer** passionate about building high-performance web applications. My expertise spans from crafting seamless user interfaces to architecting scalable backend systems.",
+      "Specializing in **Next.js**, **React**, **NestJS**, and **PostgreSQL**, I focus on writing clean, type-safe code and delivering products that prioritize user experience. I believe great software solves real problems elegantly."
     ],
     "milestones": [
-      "Developed **Ling's Home** - A comprehensive digital service management platform that streamlined operations for 100+ businesses",
-      "Mastered **technical SEO** and **performance optimization**, improving page load times by 60% on average",
-      "Built **AI-powered features** and **ML integrations** as part of EdTech solutions",
-      "Contributed to **10+ production projects** across e-commerce, SaaS, and education sectors"
+      "Built **10+ projects** across personal, freelance, and learning contexts covering frontend, backend, and fullstack development",
+      "Mastered the **TypeScript** ecosystem from React frontends to NestJS backends with Prisma ORM",
+      "Explored **cloud deployments** on Render, Clever Cloud, and AWS for various side projects",
+      "Constantly improving through **open-source contributions** on GitHub (smoluca123)"
     ],
     "interests": [
       { "icon": "code2", "title": "Coding", "description": "Exploring new technologies and open-source contributions" },
       { "icon": "coffee", "title": "Coffee", "description": "My fuel for debugging, thinking, and solving problems" },
       { "icon": "guitar", "title": "Guitar", "description": "Balancing technical precision with creative expression" }
     ],
-    "philosophy": "Great software is built on three pillars: **clean code**, **user empathy**, and **continuous learning**. I strive to create products that are not just functional, but truly delightful to use."
+    "philosophy": "Great software is built on three pillars: **clean code**, **user empathy**, and **continuous learning**. I strive to create products that are not just functional, but truly delightful to use.",
+    "techStack": [
+      {
+        "category": "Languages",
+        "color": "yellow",
+        "items": ["HTML5", "CSS3", "JavaScript", "TypeScript"]
+      },
+      {
+        "category": "Frontend",
+        "color": "cyan",
+        "items": ["React", "Next.js", "Tailwind CSS", "Shadcn/ui", "Zustand", "Redux", "React Query", "Styled Components"]
+      },
+      {
+        "category": "Backend",
+        "color": "green",
+        "items": ["Node.js", "Express.js", "NestJS", "Prisma ORM"]
+      },
+      {
+        "category": "Database",
+        "color": "orange",
+        "items": ["PostgreSQL", "MySQL"]
+      },
+      {
+        "category": "Cloud & Hosting",
+        "color": "purple",
+        "items": ["Vercel", "Render", "Clever Cloud", "AWS"]
+      },
+      {
+        "category": "Tools",
+        "color": "pink",
+        "items": ["Git", "NPM", "VS Code", "Prettier", "Postman", "Figma"]
+      }
+    ]
   },
   "experiences": [
     {
-      "period": "2025 - Present",
-      "title": "Junior Software Developer",
-      "company": "EduVanceAI",
-      "description": "Building intelligent backend systems and AI integrations for an EdTech platform. ML-powered personalization, RAG pipelines, and scalable APIs serving thousands of learners daily.",
-      "techStack": ["FastAPI", "Python", "Django", "PostgreSQL", "Docker", "AWS", "GenAI", "React"]
-    },
-    {
-      "period": "Jun 2023 – Aug 2023",
-      "title": "User Experience Designer",
-      "company": "Zepto Digital Labs",
-      "description": "Designed UI for a simulation platform and improved user experience through design thinking principles. Delivered research-backed interface improvements that enhanced usability.",
-      "techStack": ["Figma", "UX Research", "Design Thinking", "Prototyping"]
-    },
-    {
-      "period": "Jun 2023 – Jul 2023",
-      "title": "Back End Intern",
-      "company": "Laser Technologies Pvt Ltd",
-      "description": "Managed and maintained backend systems and databases to support enterprise-level web applications. Ensured uptime, performance, and data integrity across production systems.",
-      "techStack": ["Backend", "Databases", "SQL", "Web Applications"]
+      "period": "2024 - Present",
+      "title": "Fresher Fullstack Web Developer",
+      "company": "Self-employed / Freelance",
+      "description": "Building and shipping fullstack web applications using React, Next.js, NestJS, and PostgreSQL. Focused on clean architecture, type safety with TypeScript, and delivering polished user experiences.",
+      "techStack": ["Next.js", "React", "TypeScript", "NestJS", "PostgreSQL", "Tailwind CSS", "Prisma", "Zustand"]
     }
   ],
   "projects": [
     {
       "id": "1",
-      "title": "Ling's Home",
-      "description": "A comprehensive digital service management platform for seamless business operations",
-      "problemSolved": "Automated service booking, scheduling, and customer management for 100+ businesses",
-      "techStack": ["Next.js", "React", "PostgreSQL", "Tailwind CSS", "Stripe", "Vercel"],
-      "githubUrl": "https://github.com",
-      "liveUrl": "https://lingshome.com",
-      "thumbnail": "Dashboard with service listings and booking management",
+      "title": "Disconnected – Social Network",
+      "description": "A fullstack social networking platform with real-time features, post management, and user interactions",
+      "problemSolved": "Built a complete social platform from scratch with auth, posts, comments, likes, and follower systems",
+      "techStack": ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS", "Zustand"],
+      "githubUrl": "https://github.com/smoluca123",
+      "liveUrl": "#",
+      "thumbnail": "Social network feed with posts, likes, and comment interactions",
       "year": "2024",
-      "role": "Lead Fullstack Developer",
-      "status": "Live",
-      "longDescription": "Ling's Home is an end-to-end platform that lets small service businesses manage bookings, schedules, payments, and customers from a single dashboard. I owned the architecture, the booking engine, and the Stripe payment flow from design through production.",
+      "role": "Fullstack Developer",
+      "status": "In Progress",
+      "longDescription": "Disconnected is a fullstack social networking application where users can register, follow each other, create posts, comment, and interact in real time. Built with a NestJS REST API backend and a Next.js frontend, connected to a PostgreSQL database managed via Prisma ORM.",
       "outcomes": [
-        "Onboarded 100+ businesses in the first 6 months",
-        "Reduced no-show rate by ~30% with automated reminders",
-        "Processed payments end-to-end via Stripe with zero manual reconciliation"
+        "End-to-end auth flow with JWT and refresh tokens",
+        "Real-time-ready architecture with modular NestJS services",
+        "Type-safe API contracts shared between frontend and backend"
       ],
       "features": [
-        "Real-time booking and scheduling engine",
-        "Stripe-backed payments and invoicing",
-        "Role-based dashboards for owners and staff",
-        "Automated email/SMS reminders"
+        "User authentication & authorization (JWT)",
+        "Post creation, editing, deletion, and likes",
+        "Follow/unfollow system and user profiles",
+        "Comment threads and nested replies"
       ]
     },
     {
       "id": "2",
-      "title": "EduVance Platform",
-      "description": "AI-powered educational platform with personalized learning paths and GenAI integration",
-      "problemSolved": "Created ML-powered personalization engine and RAG pipelines for adaptive learning",
-      "techStack": ["FastAPI", "Python", "React", "PostgreSQL", "GenAI", "Docker", "AWS"],
-      "githubUrl": "https://github.com",
-      "liveUrl": "https://eduvance.ai",
-      "thumbnail": "Learning dashboard with AI-powered course recommendations",
+      "title": "E-commerce Platform",
+      "description": "Full-featured e-commerce platform with product management, cart, and payment integration",
+      "problemSolved": "Built a complete transaction flow with cart management and real-time inventory sync",
+      "techStack": ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
+      "githubUrl": "https://github.com/smoluca123",
+      "liveUrl": "#",
+      "thumbnail": "E-commerce product showcase and checkout flow",
       "year": "2024",
-      "role": "Backend & AI Engineer",
-      "status": "Live",
-      "longDescription": "EduVance adapts learning paths to each student using a RAG-based recommendation engine. I built the FastAPI backend, the retrieval pipeline over course content, and the GenAI integration that generates explanations and practice questions on demand.",
+      "role": "Fullstack Developer",
+      "status": "Completed",
+      "longDescription": "A fullstack e-commerce application covering product catalog, cart management, order processing, and an admin dashboard. Built with Next.js on the frontend and NestJS + Prisma on the backend, connected to a PostgreSQL database.",
       "outcomes": [
-        "Improved lesson completion rate by 45% in pilot cohorts",
-        "Served personalized recommendations with sub-200ms latency",
-        "Cut content-authoring time with AI-assisted question generation"
+        "Complete product catalog with filtering and search",
+        "Cart and order management with role-based access",
+        "Admin dashboard for inventory and order tracking"
       ],
       "features": [
-        "RAG pipeline over course material",
-        "Adaptive learning-path engine",
-        "GenAI explanations and practice generation",
-        "Containerized deployment on AWS"
+        "Product catalog and search",
+        "Cart and order management",
+        "Role-based admin dashboard",
+        "Prisma-managed PostgreSQL schema"
       ]
     },
     {
       "id": "3",
-      "title": "Performance Dashboard",
-      "description": "Real-time analytics and performance monitoring dashboard with technical SEO metrics",
-      "problemSolved": "Optimized SEO and performance tracking, improving page load times by 60%",
-      "techStack": ["Next.js", "React", "PostgreSQL", "D3.js", "Tailwind CSS"],
-      "githubUrl": "https://github.com",
-      "liveUrl": "https://dashboard.example.com",
-      "thumbnail": "Analytics dashboard with real-time metrics and charts",
-      "year": "2023",
-      "role": "Frontend Developer",
+      "title": "Portfolio IDE",
+      "description": "VS Code-inspired portfolio website with a terminal, file explorer, and AI copilot",
+      "problemSolved": "Created a unique developer-style portfolio that showcases skills in an interactive IDE interface",
+      "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Zustand"],
+      "githubUrl": "https://github.com/smoluca123",
+      "liveUrl": "https://paindev.net",
+      "thumbnail": "IDE-style portfolio with file explorer and tabbed editor interface",
+      "year": "2025",
+      "role": "Solo Developer",
       "status": "Live",
-      "longDescription": "A real-time dashboard that surfaces Core Web Vitals, technical SEO health, and traffic analytics in one place. I focused on the data-visualization layer with D3.js and on shipping a fast, accessible UI.",
+      "longDescription": "An IDE-inspired portfolio that mimics the look and feel of VS Code. Features a file explorer sidebar, tabbed editor, integrated terminal, and an AI copilot assistant. Built with Next.js and Tailwind CSS for maximum performance and customization.",
       "outcomes": [
-        "Improved tracked sites' page load times by up to 60%",
-        "Consolidated 4 separate tools into a single dashboard",
-        "Surfaced SEO regressions before they hit production"
+        "Unique portfolio UX that stands out in job applications",
+        "AI copilot powered by Gemini API for interactive Q&A",
+        "Fast, SEO-optimized with Next.js App Router"
       ],
       "features": [
-        "Live Core Web Vitals monitoring",
-        "Interactive D3.js charts",
-        "Technical SEO audit reports",
-        "Historical trend analysis"
+        "VS Code-inspired IDE layout",
+        "File explorer and tabbed navigation",
+        "Integrated terminal panel",
+        "AI Copilot assistant"
       ]
     },
     {
       "id": "4",
-      "title": "Design System UI Library",
-      "description": "Reusable component library for building consistent UIs across multiple projects",
-      "problemSolved": "Reduced development time by 40% through standardized, accessible components",
-      "techStack": ["React", "Storybook", "TypeScript", "Tailwind CSS", "npm"],
-      "githubUrl": "https://github.com",
-      "liveUrl": "https://ui-library.example.com",
-      "thumbnail": "Collection of reusable UI components and design tokens",
+      "title": "Discord Bot",
+      "description": "Feature-rich Discord bot with moderation, music, and utility commands",
+      "problemSolved": "Automated server management and entertainment for Discord communities",
+      "techStack": ["Node.js", "TypeScript", "Discord.js", "PostgreSQL"],
+      "githubUrl": "https://github.com/smoluca123",
+      "liveUrl": "#",
+      "thumbnail": "Discord bot command interface with music and moderation features",
       "year": "2023",
-      "role": "Maintainer",
-      "status": "Live",
-      "longDescription": "A typed, accessible component library published to npm and documented in Storybook. It standardizes design tokens and patterns across multiple product teams.",
+      "role": "Solo Developer",
+      "status": "Completed",
+      "longDescription": "A Discord bot built with Discord.js and TypeScript, featuring moderation commands, music playback, and custom utility commands. Deployed and serving multiple Discord communities.",
       "outcomes": [
-        "Reduced UI development time by ~40%",
-        "Adopted across 5+ internal projects",
-        "Shipped WCAG-compliant, fully typed components"
+        "Automated moderation reducing manual admin workload",
+        "Music playback with queue management",
+        "Custom commands for server engagement"
       ],
       "features": [
-        "40+ accessible React components",
-        "Design tokens and theming",
-        "Storybook documentation",
-        "Published and versioned on npm"
+        "Moderation commands (ban, kick, mute)",
+        "Music playback with queue",
+        "Utility and fun commands",
+        "PostgreSQL-backed user data"
       ]
     },
     {
       "id": "5",
-      "title": "E-commerce Platform",
-      "description": "Full-featured e-commerce platform with inventory management and payment integration",
-      "problemSolved": "Built complete transaction flow with Stripe integration and real-time inventory sync",
-      "techStack": ["Next.js", "PostgreSQL", "Stripe", "Vercel", "Redis"],
-      "githubUrl": "https://github.com",
-      "liveUrl": "https://ecommerce.example.com",
-      "thumbnail": "E-commerce product showcase and checkout flow",
-      "year": "2022",
-      "role": "Fullstack Developer",
-      "status": "Archived",
-      "longDescription": "A full e-commerce platform with catalog, cart, checkout, and inventory sync. I implemented the transaction flow with Stripe and used Redis to keep inventory consistent under concurrent purchases.",
+      "title": "Design System UI Library",
+      "description": "Reusable component library for building consistent UIs across multiple projects",
+      "problemSolved": "Reduced development time through standardized, accessible components with TypeScript support",
+      "techStack": ["React", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Storybook"],
+      "githubUrl": "https://github.com/smoluca123",
+      "liveUrl": "#",
+      "thumbnail": "Collection of reusable UI components and design tokens",
+      "year": "2024",
+      "role": "Maintainer",
+      "status": "In Progress",
+      "longDescription": "A typed, accessible component library built on top of Shadcn/ui and Tailwind CSS. Documented with Storybook, it standardizes design tokens and component patterns across multiple personal projects.",
       "outcomes": [
-        "Handled concurrent checkouts without overselling",
-        "Integrated Stripe for the full payment lifecycle",
-        "Kept inventory in sync in real time with Redis"
+        "Reduced UI development time across personal projects",
+        "Fully typed components with TypeScript",
+        "Consistent design language across the portfolio"
       ],
       "features": [
-        "Product catalog and search",
-        "Cart and Stripe checkout",
-        "Real-time inventory sync with Redis",
-        "Order management"
+        "Custom React components on Shadcn/ui base",
+        "Design tokens and theming",
+        "Storybook documentation",
+        "TypeScript-first API"
       ]
     }
   ],
@@ -230,55 +246,59 @@
         "skills": [
           { "name": "HTML5", "percentage": 95, "color": "orange" },
           { "name": "CSS3", "percentage": 90, "color": "cyan" },
-          { "name": "JavaScript", "percentage": 92, "color": "yellow" },
-          { "name": "TypeScript", "percentage": 88, "color": "accent" }
+          { "name": "JavaScript", "percentage": 88, "color": "yellow" },
+          { "name": "TypeScript", "percentage": 85, "color": "accent" }
         ]
       },
       {
         "title": "FRONTEND",
         "skills": [
-          { "name": "React", "percentage": 92, "color": "cyan" },
+          { "name": "React", "percentage": 88, "color": "cyan" },
+          { "name": "Next.js", "percentage": 85, "color": "accent" },
           { "name": "Tailwind CSS", "percentage": 90, "color": "cyan" },
-          { "name": "Shadcn/ui", "percentage": 85, "color": "purple" },
-          { "name": "Styled Components", "percentage": 80, "color": "pink" },
-          { "name": "Redux", "percentage": 82, "color": "purple" },
-          { "name": "React Query", "percentage": 85, "color": "red" }
+          { "name": "Shadcn/ui", "percentage": 82, "color": "purple" },
+          { "name": "Styled Components", "percentage": 78, "color": "pink" },
+          { "name": "Redux", "percentage": 78, "color": "purple" },
+          { "name": "Zustand", "percentage": 82, "color": "orange" },
+          { "name": "React Query", "percentage": 80, "color": "red" }
         ]
       },
       {
         "title": "BACKEND",
         "skills": [
-          { "name": "Node.js", "percentage": 88, "color": "green" },
-          { "name": "Express.js", "percentage": 85, "color": "yellow" },
-          { "name": "NestJS", "percentage": 82, "color": "red" }
+          { "name": "Node.js", "percentage": 85, "color": "green" },
+          { "name": "Express.js", "percentage": 82, "color": "yellow" },
+          { "name": "NestJS", "percentage": 80, "color": "red" },
+          { "name": "Prisma ORM", "percentage": 80, "color": "accent" }
         ]
       },
       {
         "title": "DATABASES",
         "skills": [
-          { "name": "PostgreSQL", "percentage": 85, "color": "cyan" },
-          { "name": "MySQL", "percentage": 80, "color": "orange" }
+          { "name": "PostgreSQL", "percentage": 82, "color": "cyan" },
+          { "name": "MySQL", "percentage": 78, "color": "orange" }
         ]
       },
       {
         "title": "HOSTING & CLOUD",
         "skills": [
-          { "name": "Render", "percentage": 85, "color": "purple" },
-          { "name": "Clever Cloud", "percentage": 78, "color": "red" },
-          { "name": "AWS Cloud", "percentage": 75, "color": "orange" }
+          { "name": "Render", "percentage": 82, "color": "purple" },
+          { "name": "Clever Cloud", "percentage": 75, "color": "red" },
+          { "name": "AWS Cloud", "percentage": 70, "color": "orange" },
+          { "name": "Vercel", "percentage": 85, "color": "accent" }
         ]
       },
       {
         "title": "TOOLS",
         "skills": [
-          { "name": "Git", "percentage": 90, "color": "orange" },
-          { "name": "NPM", "percentage": 90, "color": "red" },
-          { "name": "Prettier", "percentage": 88, "color": "green" },
-          { "name": "Brave Browser", "percentage": 85, "color": "orange" }
+          { "name": "Git", "percentage": 88, "color": "orange" },
+          { "name": "NPM", "percentage": 88, "color": "red" },
+          { "name": "Prettier", "percentage": 90, "color": "green" },
+          { "name": "VS Code", "percentage": 92, "color": "accent" }
         ]
       }
     ],
-    "familiar": ["More..."]
+    "familiar": ["Docker", "Figma", "Postman", "ESLint", "More..."]
   },
   "contact": {
     "fileBanner": [
@@ -290,29 +310,29 @@
         "icon": "mail",
         "iconColor": "green",
         "label": "Email",
-        "value": "luca.nguyen@example.com",
-        "href": "mailto:luca.nguyen@example.com"
-      },
-      {
-        "icon": "messageCircle",
-        "iconColor": "accent",
-        "label": "Telegram",
-        "value": "@luca_nguyen",
-        "href": "https://t.me/luca_nguyen"
+        "value": "icaluca12@gmail.com",
+        "href": "mailto:icaluca12@gmail.com"
       },
       {
         "icon": "github",
         "iconColor": "pink",
         "label": "GitHub",
-        "value": "github.com/luca",
-        "href": "https://github.com/luca"
+        "value": "github.com/smoluca123",
+        "href": "https://github.com/smoluca123"
       },
       {
-        "icon": "linkedin",
+        "icon": "globe",
+        "iconColor": "accent",
+        "label": "Facebook",
+        "value": "facebook.com/LucaNN.Info",
+        "href": "https://www.facebook.com/LucaNN.Info/"
+      },
+      {
+        "icon": "bookOpen",
         "iconColor": "orange",
-        "label": "LinkedIn",
-        "value": "linkedin.com/in/luca",
-        "href": "https://linkedin.com/in/luca"
+        "label": "Website",
+        "value": "paindev.net",
+        "href": "https://paindev.net"
       }
     ],
     "responseTime": {
@@ -323,16 +343,16 @@
   "readme": {
     "fileBanner": [
       "// README.md - Welcome to Portfolio",
-      "// A fullstack developer's playground and professional showcase"
+      "// A fresher fullstack developer's playground and professional showcase"
     ],
     "subtitleSegments": [
       { "text": "Fullstack Developer", "color": "accent" },
       { "text": "Problem Solver", "color": "green" },
       { "text": "Perpetual Learner", "color": "accent" }
     ],
-    "mission": "Building high-performance web products that prioritize user experience and technical excellence. From concept to production, I obsess over code quality, performance optimization, and solving real problems.",
+    "mission": "Building high-performance web products that prioritize user experience and technical excellence. From concept to production, I obsess over code quality, clean architecture, and solving real problems with TypeScript.",
     "quickFacts": [
-      { "value": "3+", "label": "Years Experience", "color": "accent" },
+      { "value": "1+", "label": "Years Experience", "color": "accent" },
       { "value": "10+", "label": "Projects Built", "color": "green" },
       { "value": "100%", "label": "Commitment", "color": "pink" },
       { "value": "∞", "label": "Learning", "color": "orange" }
@@ -346,7 +366,7 @@
       { "tab": "contact.css", "icon": "arrowRight", "description": "Get in touch and connect" }
     ],
     "footer": {
-      "comment": "// Built with React, Next.js & Tailwind CSS",
+      "comment": "// Built with Next.js, TypeScript & Tailwind CSS",
       "credit": "Designed & developed by **Luca Nguyen**"
     }
   }

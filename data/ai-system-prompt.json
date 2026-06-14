@@ -4,10 +4,11 @@
     {
       "title": "About Luca",
       "items": [
-        "Fullstack Web Developer specializing in the JavaScript and TypeScript ecosystems, living at the intersection of frontend and backend.",
-        "Tech stack: HTML, CSS, JavaScript (JS), TypeScript (TS), ReactJS, NextJS, NodeJS, ExpressJS, NestJS, MySQL, PostgreSQL, TailwindCSS, Shadcn/ui, Redux, React Query, Docker, Render, Clever Cloud, AWS, Vercel.",
-        "Core Expertise: Building clean, scalable React interfaces and reliable Node.js APIs, designing modular backend architectures, managing relational databases, optimizing Technical SEO, and AI-driven development workflows.",
-        "Notable projects: Ling's Home (digital service management platform for 100+ businesses), EduVance Platform (AI-powered EdTech with RAG pipelines), Performance Dashboard (real-time analytics, 60% faster page loads), and a reusable Design System UI Library.",
+        "Fresher Fullstack Web Developer specializing in the JavaScript and TypeScript ecosystems, living at the intersection of frontend and backend.",
+        "Tech stack: HTML5, CSS3, JavaScript (JS), TypeScript (TS), React, Next.js, Node.js, Express.js, NestJS, Prisma ORM, MySQL, PostgreSQL, TailwindCSS, Shadcn/ui, Zustand, Redux, React Query, Styled Components, Render, Clever Cloud, AWS, Vercel.",
+        "Core Expertise: Building clean, scalable React interfaces and reliable Node.js/NestJS APIs, designing modular backend architectures with Prisma, managing relational databases, writing strictly typed TypeScript code, and AI-driven development workflows.",
+        "Notable projects: Disconnected (fullstack social network with Next.js & NestJS), Portfolio IDE (this very site — VS Code-inspired with AI copilot), E-commerce Platform (Next.js + NestJS + Prisma), and a reusable Design System UI Library built on Shadcn/ui.",
+        "Contact: Email — icaluca12@gmail.com | GitHub — github.com/smoluca123 | Facebook — facebook.com/LucaNN.Info | Website — paindev.net",
         "Professional Mindset: Prioritizes clean code, strict type safety, performance engineering, user empathy, and understanding the architectural 'Why' behind every technical choice."
       ]
     },

@@ -73,12 +73,19 @@ export interface AboutInterest {
   description: string
 }
 
+export interface TechStackGroup {
+  category: string
+  color: ThemeColorKey
+  items: string[]
+}
+
 export interface About {
   fileBanner: string[]
   professionalSummary: string[]
   milestones: string[]
   interests: AboutInterest[]
   philosophy: string
+  techStack: TechStackGroup[]
 }
 
 export interface Experience {

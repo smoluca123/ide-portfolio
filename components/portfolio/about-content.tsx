@@ -4,7 +4,7 @@ import { useTheme } from "./theme-context"
 import { withAlpha } from "./themes"
 import { Icon } from "./icon"
 import { RichText } from "./rich-text"
-import { portfolio } from "@/lib/portfolio"
+import { portfolio, type ThemeColorKey } from "@/lib/portfolio"
 
 const { about } = portfolio
 
@@ -35,6 +35,54 @@ export function AboutContent() {
                 <RichText text={paragraph} semibold={false} />
               </p>
             ))}
+          </div>
+        </section>
+
+        {/* Tech Stack & Tools */}
+        <section>
+          <h2 className="mb-5 text-2xl font-bold" style={{ color: theme.accent }}>
+            Tech Stack &amp; Tools
+          </h2>
+          <div className="space-y-4">
+            {about.techStack.map((group) => {
+              const color = theme[group.color as ThemeColorKey] ?? theme.accent
+              return (
+                <div key={group.category}>
+                  {/* Category label */}
+                  <div
+                    className="mb-2 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest"
+                    style={{ color: withAlpha(color, "aa") }}
+                  >
+                    <span
+                      className="inline-block h-px flex-1"
+                      style={{ backgroundColor: withAlpha(color, "33") }}
+                    />
+                    <span>{group.category}</span>
+                    <span
+                      className="inline-block h-px flex-1"
+                      style={{ backgroundColor: withAlpha(color, "33") }}
+                    />
+                  </div>
+
+                  {/* Pill badges */}
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded border px-2.5 py-1 text-[12px] font-medium transition-all hover:scale-105"
+                        style={{
+                          color,
+                          backgroundColor: withAlpha(color, "12"),
+                          borderColor: withAlpha(color, "40"),
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </section>
 

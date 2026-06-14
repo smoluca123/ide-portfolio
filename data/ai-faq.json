@@ -13,7 +13,7 @@
         "bio",
         "who is he"
       ],
-      "answer": "Luca Nguyen is a fullstack developer with 3+ years of experience building high-performance web apps. He lives at the intersection of frontend and backend with TypeScript — crafting clean, scalable React interfaces and reliable Node.js APIs that ship to production.\n\nHis current focus: technical SEO, performance optimization, and AI-powered features. He specializes in Next.js, React, NestJS, and PostgreSQL.\n\nOff the keyboard, he's into coffee, guitar, and exploring new technologies."
+      "answer": "Luca Nguyen (LucaN) is a fresher fullstack web developer living at the intersection of frontend and backend with TypeScript — crafting clean, scalable React interfaces and reliable Node.js APIs.\n\nHis core stack: Next.js, React, NestJS, PostgreSQL, Prisma, Tailwind CSS, and Zustand. He writes strictly typed, modular code and cares deeply about clean architecture.\n\nOff the keyboard: he's into coffee, guitar, and constantly exploring new technologies. You can find his work on GitHub at github.com/smoluca123."
     },
     {
       "id": "projects",
@@ -27,7 +27,7 @@
         "show me projects",
         "what did he build"
       ],
-      "answer": "Here are some highlights from Luca's project work:\n\n1. Ling's Home — Digital service management platform serving 100+ businesses (Next.js, PostgreSQL, Stripe).\n2. EduVance Platform — AI-powered EdTech with personalized learning paths and RAG pipelines (FastAPI, Python, GenAI, AWS).\n3. Performance Dashboard — Real-time analytics with technical SEO tracking, improving page loads by 60% (Next.js, D3.js).\n4. Design System UI Library — Reusable component library that cut dev time by 40% (React, Storybook, TypeScript).\n5. E-commerce Platform — Full transaction flow with Stripe and real-time inventory sync (Next.js, PostgreSQL, Redis).\n\nOpen the projects.js tab to dig into the details."
+      "answer": "Here are some highlights from Luca's project work:\n\n1. Disconnected — A fullstack social networking platform with auth, posts, follows, and comments (Next.js, NestJS, TypeScript, PostgreSQL, Prisma).\n2. E-commerce Platform — Full-featured store with cart, orders, and admin dashboard (Next.js, NestJS, TypeScript, Prisma).\n3. Portfolio IDE — This very site! A VS Code-inspired portfolio with file explorer, terminal, and AI copilot (Next.js, Tailwind CSS, Zustand).\n4. Discord Bot — Feature-rich bot with moderation, music, and utilities (Node.js, TypeScript, Discord.js).\n5. Design System UI Library — Reusable component library built on Shadcn/ui with TypeScript support.\n\nOpen the projects.js tab to dig into the details."
     },
     {
       "id": "experience",
@@ -42,7 +42,7 @@
         "work history",
         "professional experience"
       ],
-      "answer": "Luca's professional journey:\n\n• 2025 - Present — Junior Software Developer @ EduVanceAI. Building intelligent backends, ML personalization, and RAG pipelines serving thousands of learners daily.\n\n• Jun 2023 – Aug 2023 — User Experience Designer @ Zepto Digital Labs. Designed UI for a simulation platform using design thinking and UX research.\n\n• Jun 2023 – Jul 2023 — Back End Intern @ Laser Technologies Pvt Ltd. Maintained backend systems and databases for enterprise web applications.\n\nCheck experience.ts for the full timeline."
+      "answer": "Luca is currently a Fresher Fullstack Web Developer focused on building and shipping fullstack web applications using his core stack of Next.js, NestJS, TypeScript, and PostgreSQL.\n\nHe has been working on personal, freelance, and open-source projects since 2024, with all his work available on GitHub at github.com/smoluca123.\n\nCheck experience.ts for the full timeline."
     },
     {
       "id": "skills",
@@ -57,7 +57,7 @@
         "tools",
         "what tech"
       ],
-      "answer": "Luca's primary stack:\n\nLanguages & Markup: TypeScript, JavaScript, HTML5, CSS3\nFrontend: React, Tailwind CSS, Shadcn/ui, Redux, React Query, Styled Components\nBackend: Node.js, Express.js, NestJS\nDatabases: PostgreSQL, MySQL\nHosting & Cloud: Render, Clever Cloud, AWS\nTools: Git, NPM, Prettier\n\nOpen skills.json for the full breakdown with proficiency levels."
+      "answer": "Luca's primary stack:\n\nLanguages & Markup: TypeScript, JavaScript, HTML5, CSS3\nFrontend: React, Next.js, Tailwind CSS, Shadcn/ui, Zustand, Redux, React Query, Styled Components\nBackend: Node.js, Express.js, NestJS, Prisma ORM\nDatabases: PostgreSQL, MySQL\nHosting & Cloud: Vercel, Render, Clever Cloud, AWS\nTools: Git, NPM, Prettier, VS Code\n\nOpen skills.json for the full breakdown with proficiency levels."
     },
     {
       "id": "contact",
@@ -69,11 +69,11 @@
         "email",
         "linkedin",
         "github",
-        "telegram",
+        "facebook",
         "how to contact",
         "how can i reach"
       ],
-      "answer": "Easiest ways to reach Luca:\n\n• Email: luca.nguyen@example.com\n• Telegram: @luca_nguyen\n• LinkedIn: linkedin.com/in/luca\n• GitHub: github.com/luca\n\nHe typically responds within 24 hours. The contact.css tab has a form too if you'd rather drop a message there."
+      "answer": "Easiest ways to reach Luca:\n\n• Email: icaluca12@gmail.com\n• GitHub: github.com/smoluca123\n• Facebook: facebook.com/LucaNN.Info\n• Website: paindev.net\n\nHe typically responds within 24 hours. The contact.css tab has a form too if you'd rather drop a message there."
     },
     {
       "id": "support",
@@ -86,7 +86,7 @@
         "contribute",
         "back his work"
       ],
-      "answer": "Sweet of you to ask. A few easy ways to support Luca:\n\n• ⭐ Star his projects on GitHub (github.com/luca).\n• 🔁 Share his work with folks who'd find it useful.\n• 💬 Connect on LinkedIn and engage with his posts.\n• 💼 Refer him for interesting frontend / backend / fullstack roles.\n• ☕ Buy him a coffee — he runs on it.\n\nGenuine feedback on his projects is always welcome."
+      "answer": "Sweet of you to ask. A few easy ways to support Luca:\n\n• ⭐ Star his projects on GitHub (github.com/smoluca123).\n• 🔁 Share his work with folks who'd find it useful.\n• 💬 Connect on Facebook and engage with his posts.\n• 💼 Refer him for interesting frontend / backend / fullstack roles.\n• ☕ Buy him a coffee — he runs on it.\n\nGenuine feedback on his projects is always welcome."
     }
   ]
 }

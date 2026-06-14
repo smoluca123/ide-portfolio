@@ -46,31 +46,21 @@ export function SkillsContent() {
               />
             </div>
 
-            <div className="space-y-3">
+            <div className="flex flex-wrap gap-2">
               {category.skills.map((skill) => {
                 const color = theme[skill.color] ?? theme.accent
                 return (
-                  <div key={skill.name}>
-                    <div className="mb-1 flex items-center justify-between text-xs">
-                      <span style={{ color: theme.foreground }}>{skill.name}</span>
-                      <span style={{ color }} className="font-semibold">
-                        {skill.percentage}%
-                      </span>
-                    </div>
-
-                    <div
-                      className="h-1.5 overflow-hidden rounded-full"
-                      style={{ backgroundColor: withAlpha(theme.muted, "20") }}
-                    >
-                      <div
-                        className="h-full transition-all"
-                        style={{
-                          width: `${skill.percentage}%`,
-                          backgroundColor: color,
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <span
+                    key={skill.name}
+                    className="rounded border px-2.5 py-1 text-xs font-medium transition-all hover:scale-105"
+                    style={{
+                      color,
+                      backgroundColor: withAlpha(color, "12"),
+                      borderColor: withAlpha(color, "40"),
+                    }}
+                  >
+                    {skill.name}
+                  </span>
                 )
               })}
             </div>
