@@ -210,7 +210,10 @@ function IDELayoutInner() {
         }}
       />
 
-      <TitleBar onCommandPaletteOpen={() => setCommandPaletteOpen(true)} />
+      <TitleBar
+        onCommandPaletteOpen={() => setCommandPaletteOpen(true)}
+        onTerminalToggle={toggleTerminalStore}
+      />
 
       {/* Body: activity bar (fixed) + resizable panel group + overlay drawers */}
       <div className="relative flex flex-1 overflow-hidden">

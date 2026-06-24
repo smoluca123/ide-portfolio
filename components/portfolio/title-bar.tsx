@@ -8,10 +8,16 @@ const menuItems = ["File", "Edit", "View", "Go", "Run", "Terminal", "Help", "Cop
 
 interface TitleBarProps {
   onCommandPaletteOpen?: () => void
+  onTerminalToggle?: () => void
 }
 
-export function TitleBar({ onCommandPaletteOpen }: TitleBarProps) {
+export function TitleBar({ onCommandPaletteOpen, onTerminalToggle }: TitleBarProps) {
   const { theme } = useTheme()
+
+  // Map menu items that have actions to their handlers
+  const menuHandlers: Record<string, (() => void) | undefined> = {
+    Terminal: onTerminalToggle,
+  }
 
   return (
     <div
@@ -32,6 +38,7 @@ export function TitleBar({ onCommandPaletteOpen }: TitleBarProps) {
           {menuItems.map((item) => (
             <button
               key={item}
+              onClick={menuHandlers[item]}
               className="rounded-sm px-2 py-1 font-mono text-[11px] transition-colors"
               style={{
                 color: theme.foreground,

@@ -186,6 +186,7 @@
         "AWS S3 (Storj)",
         "MailPace",
         "JWT, Passport",
+        "bcryptjs",
         "Socket.IO",
         "Swagger"
       ],
@@ -194,7 +195,7 @@
       "thumbnail": "Social network feed with posts, likes, real-time chat, and nested comment interactions",
       "year": "2024",
       "role": "Frontend Developer",
-      "status": "Completed",
+      "status": "Live",
       "longDescription": "SMOSpace is a feature-rich social networking platform built with React 19 and TypeScript. It supports rich post creation with TipTap editor and image uploads, nested comments (up to 4 levels), a full friend/follower system, and a real-time live chat powered by Socket.IO. Redux Toolkit handles global state, Zod + React Hook Form ensure robust form validation, and Framer Motion delivers smooth UI animations throughout the app.",
       "outcomes": [
         "Real-time notifications and live chat with Socket.IO and push notifications",
@@ -237,6 +238,7 @@
         "Redis",
         "AWS S3",
         "JWT",
+        "bcryptjs",
         "Passport",
         "Mailtrap",
         "Bun"
@@ -246,7 +248,7 @@
       "thumbnail": "E-commerce product showcase and checkout flow",
       "year": "2026",
       "role": "Fullstack Developer",
-      "status": "Completed",
+      "status": "Live",
       "longDescription": "A production-grade fullstack e-commerce platform with a Next.js 16 (App Router) + React 19 frontend and a NestJS 11 backend. The frontend uses React Query for server state, Zustand for client state, TipTap for rich product descriptions, Recharts for analytics dashboards, and Framer Motion for animations. The backend is powered by NestJS with Prisma 7 + PostgreSQL for data persistence, Redis (IORedis) for caching and sessions, AWS S3 for media uploads, Mailtrap for transactional emails, and Pino for structured logging. Auth is handled via JWT + Passport with bcryptjs password hashing.",
       "outcomes": [
         "Complete product catalog with rich text descriptions, filtering, and search",
@@ -269,6 +271,64 @@
     },
     {
       "id": "3",
+      "title": "SMODrive – Cloud Storage Platform",
+      "description": "A fullstack cloud storage platform (Google Drive / Dropbox-style) with hierarchical file management, subscriptions, analytics, referral system, and AWS S3 storage",
+      "problemSolved": "Built a complete cloud storage solution from scratch with monorepo architecture, covering file/folder management, storage quotas, subscription & payment, referral marketing, analytics, and secure AWS S3 integration",
+      "techStack": [
+        "Next.js 15",
+        "React 19",
+        "TypeScript",
+        "TailwindCSS 4",
+        "Radix UI",
+        "Zustand",
+        "TanStack Query",
+        "React Hook Form",
+        "Zod",
+        "Ky",
+        "React Dropzone",
+        "Turbopack",
+        "NestJS 11",
+        "Prisma 6",
+        "PostgreSQL",
+        "Redis",
+        "AWS S3",
+        "Passport JWT",
+        "bcryptjs",
+        "Sharp",
+        "Multer",
+        "Swagger",
+        "Bun"
+      ],
+      "githubUrl": "https://github.com/smoluca123",
+      "liveUrl": "#",
+      "thumbnail": "Cloud storage dashboard with file explorer, upload progress, and storage analytics",
+      "year": "2025",
+      "role": "Fullstack Developer",
+      "status": "In Progress",
+      "longDescription": "SMODrive is a modern fullstack cloud storage platform built with a Monorepo architecture. The backend uses NestJS 11 + Prisma 6 + PostgreSQL for data management, Redis (IORedis) for caching and sessions, AWS S3 (with multipart upload and presigned URLs) for file storage, Sharp for image processing, and Swagger for API documentation. The frontend leverages Next.js 15 (App Router + Turbopack), React 19 with React Compiler, TailwindCSS 4, Radix UI, TanStack Query for server state, Zustand for client state, and React Dropzone for seamless file uploads. Features a complete subscription system, detailed analytics dashboard, and a referral marketing program.",
+      "outcomes": [
+        "Hierarchical file/folder management with storage quota enforcement per plan",
+        "AWS S3 multipart uploads and presigned URLs for secure, scalable file access",
+        "Subscription and payment system with tiered storage plans",
+        "Detailed analytics and reporting dashboard for storage usage",
+        "Referral marketing program with reward tracking",
+        "Redis caching for high-performance API and session management"
+      ],
+      "features": [
+        "Hierarchical file/folder management (create, rename, move, delete)",
+        "AWS S3 multipart file upload with progress tracking via React Dropzone",
+        "Presigned URLs for secure file sharing and download",
+        "Image processing with Sharp (thumbnails, resize)",
+        "Subscription plans with storage quotas and payment integration",
+        "Referral program with reward tracking",
+        "Analytics dashboard for storage usage and activity",
+        "JWT + Passport authentication with bcryptjs and rate limiting",
+        "Full API documentation with Swagger / OpenAPI",
+        "Monorepo with shared TypeScript types between frontend and backend"
+      ]
+    },
+    {
+      "id": "4",
       "title": "Portfolio IDE",
       "description": "VS Code-inspired portfolio website with a terminal, file explorer, and AI copilot",
       "problemSolved": "Created a unique developer-style portfolio that showcases skills in an interactive IDE interface",
@@ -296,62 +356,6 @@
         "File explorer and tabbed navigation",
         "Integrated terminal panel",
         "AI Copilot assistant"
-      ]
-    },
-    {
-      "id": "4",
-      "title": "Discord Bot",
-      "description": "Feature-rich Discord bot with moderation, music, and utility commands",
-      "problemSolved": "Automated server management and entertainment for Discord communities",
-      "techStack": ["Node.js", "TypeScript", "Discord.js", "PostgreSQL"],
-      "githubUrl": "https://github.com/smoluca123",
-      "liveUrl": "#",
-      "thumbnail": "Discord bot command interface with music and moderation features",
-      "year": "2023",
-      "role": "Solo Developer",
-      "status": "Completed",
-      "longDescription": "A Discord bot built with Discord.js and TypeScript, featuring moderation commands, music playback, and custom utility commands. Deployed and serving multiple Discord communities.",
-      "outcomes": [
-        "Automated moderation reducing manual admin workload",
-        "Music playback with queue management",
-        "Custom commands for server engagement"
-      ],
-      "features": [
-        "Moderation commands (ban, kick, mute)",
-        "Music playback with queue",
-        "Utility and fun commands",
-        "PostgreSQL-backed user data"
-      ]
-    },
-    {
-      "id": "5",
-      "title": "Design System UI Library",
-      "description": "Reusable component library for building consistent UIs across multiple projects",
-      "problemSolved": "Reduced development time through standardized, accessible components with TypeScript support",
-      "techStack": [
-        "React",
-        "TypeScript",
-        "Tailwind CSS",
-        "Shadcn/ui",
-        "Storybook"
-      ],
-      "githubUrl": "https://github.com/smoluca123",
-      "liveUrl": "#",
-      "thumbnail": "Collection of reusable UI components and design tokens",
-      "year": "2024",
-      "role": "Maintainer",
-      "status": "In Progress",
-      "longDescription": "A typed, accessible component library built on top of Shadcn/ui and Tailwind CSS. Documented with Storybook, it standardizes design tokens and component patterns across multiple personal projects.",
-      "outcomes": [
-        "Reduced UI development time across personal projects",
-        "Fully typed components with TypeScript",
-        "Consistent design language across the portfolio"
-      ],
-      "features": [
-        "Custom React components on Shadcn/ui base",
-        "Design tokens and theming",
-        "Storybook documentation",
-        "TypeScript-first API"
       ]
     }
   ],
