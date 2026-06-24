@@ -44,8 +44,16 @@
     { "value": "↑", "label": "ALWAYS LEARNING" }
   ],
   "socials": [
-    { "label": "GitHub", "icon": "github", "href": "https://github.com/smoluca123" },
-    { "label": "Facebook", "icon": "globe", "href": "https://www.facebook.com/LucaNN.Info/" },
+    {
+      "label": "GitHub",
+      "icon": "github",
+      "href": "https://github.com/smoluca123"
+    },
+    {
+      "label": "Facebook",
+      "icon": "globe",
+      "href": "https://www.facebook.com/LucaNN.Info/"
+    },
     { "label": "Website", "icon": "bookOpen", "href": "https://paindev.net" },
     { "label": "Email", "icon": "mail", "href": "mailto:icaluca12@gmail.com" }
   ],
@@ -56,7 +64,7 @@
     ],
     "professionalSummary": [
       "I'm a **fresher fullstack developer** passionate about building high-performance web applications. My expertise spans from crafting seamless user interfaces to architecting scalable backend systems.",
-      "Specializing in **Next.js**, **React**, **NestJS**, and **PostgreSQL**, I focus on writing clean, type-safe code and delivering products that prioritize user experience. I believe great software solves real problems elegantly."
+      "Specializing in **Next.js**, **React**, **NestJS**, **ExpressJS**, **MySQL**, and **PostgreSQL**, I focus on writing clean, type-safe code and delivering products that prioritize user experience. I believe great software solves real problems elegantly."
     ],
     "milestones": [
       "Built **10+ projects** across personal, freelance, and learning contexts covering frontend, backend, and fullstack development",
@@ -65,9 +73,21 @@
       "Constantly improving through **open-source contributions** on GitHub (smoluca123)"
     ],
     "interests": [
-      { "icon": "code2", "title": "Coding", "description": "Exploring new technologies and open-source contributions" },
-      { "icon": "coffee", "title": "Coffee", "description": "My fuel for debugging, thinking, and solving problems" },
-      { "icon": "guitar", "title": "Guitar", "description": "Balancing technical precision with creative expression" }
+      {
+        "icon": "code2",
+        "title": "Coding",
+        "description": "Exploring new technologies and open-source contributions"
+      },
+      {
+        "icon": "coffee",
+        "title": "Coffee",
+        "description": "My fuel for debugging, thinking, and solving problems"
+      },
+      {
+        "icon": "guitar",
+        "title": "Guitar",
+        "description": "Balancing technical precision with creative expression"
+      }
     ],
     "philosophy": "Great software is built on three pillars: **clean code**, **user empathy**, and **continuous learning**. I strive to create products that are not just functional, but truly delightful to use.",
     "techStack": [
@@ -79,7 +99,16 @@
       {
         "category": "Frontend",
         "color": "cyan",
-        "items": ["React", "Next.js", "Tailwind CSS", "Shadcn/ui", "Zustand", "Redux", "React Query", "Styled Components"]
+        "items": [
+          "React",
+          "Next.js",
+          "Tailwind CSS",
+          "Shadcn/ui",
+          "Zustand",
+          "Redux",
+          "React Query",
+          "Styled Components"
+        ]
       },
       {
         "category": "Backend",
@@ -105,37 +134,83 @@
   },
   "experiences": [
     {
+      "period": "21-11-2023 - 2024",
+      "title": "Intern Frontend Web Developer",
+      "company": " Plogg VietNam",
+      "description": "Learning, building and shipping fullstack web applications using VueJS, Nuxt.js, . Focused on clean architecture, type safety with TypeScript, and delivering polished user experiences.",
+      "techStack": ["Nuxt.js", "VueJS", "TypeScript", "Vuetify"]
+    },
+    {
       "period": "2024 - Present",
-      "title": "Fresher Fullstack Web Developer",
+      "title": "Fullstack Web Developer",
       "company": "Self-employed / Freelance",
-      "description": "Building and shipping fullstack web applications using React, Next.js, NestJS, and PostgreSQL. Focused on clean architecture, type safety with TypeScript, and delivering polished user experiences.",
-      "techStack": ["Next.js", "React", "TypeScript", "NestJS", "PostgreSQL", "Tailwind CSS", "Prisma", "Zustand"]
+      "description": "Learning, building and shipping fullstack web applications using VueJS, Nuxt.js, . Focused on clean architecture, type safety with TypeScript, and delivering polished user experiences.",
+      "techStack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "NestJS",
+        "ExpressJS",
+        "PostgreSQL",
+        "Prisma ORM",
+        "Clever Cloud",
+        "Northflank",
+        "AWS",
+        "Storj (AWS S3)"
+      ]
     }
   ],
   "projects": [
     {
       "id": "1",
-      "title": "Disconnected – Social Network",
-      "description": "A fullstack social networking platform with real-time features, post management, and user interactions",
-      "problemSolved": "Built a complete social platform from scratch with auth, posts, comments, likes, and follower systems",
-      "techStack": ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS", "Zustand"],
+      "title": "SMOSpace – Social Network",
+      "description": "A fullstack social networking platform with real-time features, rich post management, live chat, and deep social interactions",
+      "problemSolved": "Built a complete social platform from scratch with auth, posts (re-post, send post to message, reactions), comments (nested reply up to 4 levels), friend system, real-time messages with push notifications, and follower system",
+      "techStack": [
+        "React 19",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Redux Toolkit",
+        "Radix UI",
+        "React Hook Form",
+        "Zod",
+        "Axios",
+        "TipTap",
+        "Framer Motion",
+        "NestJS",
+        "PostgreSQL",
+        "Prisma ORM",
+        "Redis",
+        "AWS S3 (Storj)",
+        "MailPace",
+        "JWT, Passport",
+        "Socket.IO",
+        "Swagger"
+      ],
       "githubUrl": "https://github.com/smoluca123",
-      "liveUrl": "#",
-      "thumbnail": "Social network feed with posts, likes, and comment interactions",
+      "liveUrl": "https://smospace.lmtblog.com/",
+      "thumbnail": "Social network feed with posts, likes, real-time chat, and nested comment interactions",
       "year": "2024",
-      "role": "Fullstack Developer",
-      "status": "In Progress",
-      "longDescription": "Disconnected is a fullstack social networking application where users can register, follow each other, create posts, comment, and interact in real time. Built with a NestJS REST API backend and a Next.js frontend, connected to a PostgreSQL database managed via Prisma ORM.",
+      "role": "Frontend Developer",
+      "status": "Completed",
+      "longDescription": "SMOSpace is a feature-rich social networking platform built with React 19 and TypeScript. It supports rich post creation with TipTap editor and image uploads, nested comments (up to 4 levels), a full friend/follower system, and a real-time live chat powered by Socket.IO. Redux Toolkit handles global state, Zod + React Hook Form ensure robust form validation, and Framer Motion delivers smooth UI animations throughout the app.",
       "outcomes": [
-        "End-to-end auth flow with JWT and refresh tokens",
-        "Real-time-ready architecture with modular NestJS services",
-        "Type-safe API contracts shared between frontend and backend"
+        "Real-time notifications and live chat with Socket.IO and push notifications",
+        "Nested comment system supporting up to 4 levels of replies",
+        "Rich post editor with TipTap, image uploads, reactions, and re-post support",
+        "Type-safe codebase with full TypeScript and Zod schema validation"
       ],
       "features": [
-        "User authentication & authorization (JWT)",
-        "Post creation, editing, deletion, and likes",
-        "Follow/unfollow system and user profiles",
-        "Comment threads and nested replies"
+        "Post creation with rich text editor (TipTap) and image uploads",
+        "Like, react, re-post and share posts",
+        "Nested comment threads (up to 4 levels deep)",
+        "Friend requests and follow/unfollow system",
+        "Real-time live chat with online/offline status and read receipts",
+        "Real-time push notifications",
+        "Customizable user profiles with avatar and cover photo",
+        "User search and activity feed discovery"
       ]
     },
     {
@@ -143,7 +218,14 @@
       "title": "E-commerce Platform",
       "description": "Full-featured e-commerce platform with product management, cart, and payment integration",
       "problemSolved": "Built a complete transaction flow with cart management and real-time inventory sync",
-      "techStack": ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
+      "techStack": [
+        "Next.js",
+        "NestJS",
+        "TypeScript",
+        "PostgreSQL",
+        "Prisma",
+        "Tailwind CSS"
+      ],
       "githubUrl": "https://github.com/smoluca123",
       "liveUrl": "#",
       "thumbnail": "E-commerce product showcase and checkout flow",
@@ -168,7 +250,13 @@
       "title": "Portfolio IDE",
       "description": "VS Code-inspired portfolio website with a terminal, file explorer, and AI copilot",
       "problemSolved": "Created a unique developer-style portfolio that showcases skills in an interactive IDE interface",
-      "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Zustand"],
+      "techStack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Shadcn/ui",
+        "Zustand"
+      ],
       "githubUrl": "https://github.com/smoluca123",
       "liveUrl": "https://paindev.net",
       "thumbnail": "IDE-style portfolio with file explorer and tabbed editor interface",
@@ -218,7 +306,13 @@
       "title": "Design System UI Library",
       "description": "Reusable component library for building consistent UIs across multiple projects",
       "problemSolved": "Reduced development time through standardized, accessible components with TypeScript support",
-      "techStack": ["React", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Storybook"],
+      "techStack": [
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Shadcn/ui",
+        "Storybook"
+      ],
       "githubUrl": "https://github.com/smoluca123",
       "liveUrl": "#",
       "thumbnail": "Collection of reusable UI components and design tokens",
@@ -358,12 +452,36 @@
       { "value": "∞", "label": "Learning", "color": "orange" }
     ],
     "navigation": [
-      { "tab": "home.tsx", "icon": "eye", "description": "My personal intro and core stats" },
-      { "tab": "experience.ts", "icon": "code2", "description": "Professional journey and roles" },
-      { "tab": "about.html", "icon": "bookOpen", "description": "Background, philosophy, and interests" },
-      { "tab": "projects.js", "icon": "zap", "description": "Featured projects and impact" },
-      { "tab": "skills.json", "icon": "code2", "description": "Technical expertise by category" },
-      { "tab": "contact.css", "icon": "arrowRight", "description": "Get in touch and connect" }
+      {
+        "tab": "home.tsx",
+        "icon": "eye",
+        "description": "My personal intro and core stats"
+      },
+      {
+        "tab": "experience.ts",
+        "icon": "code2",
+        "description": "Professional journey and roles"
+      },
+      {
+        "tab": "about.html",
+        "icon": "bookOpen",
+        "description": "Background, philosophy, and interests"
+      },
+      {
+        "tab": "projects.js",
+        "icon": "zap",
+        "description": "Featured projects and impact"
+      },
+      {
+        "tab": "skills.json",
+        "icon": "code2",
+        "description": "Technical expertise by category"
+      },
+      {
+        "tab": "contact.css",
+        "icon": "arrowRight",
+        "description": "Get in touch and connect"
+      }
     ],
     "footer": {
       "comment": "// Built with Next.js, TypeScript & Tailwind CSS",

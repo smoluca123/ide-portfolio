@@ -5,11 +5,13 @@ import { withAlpha } from "./themes"
 import { Icon } from "./icon"
 import { RichText } from "./rich-text"
 import { portfolio } from "@/lib/portfolio"
+import { useIDEStore } from "@/lib/store/ide-store"
 
 const { identity, readme } = portfolio
 
 export function ReadmeContent() {
   const { theme } = useTheme()
+  const openFile = useIDEStore((s) => s.openFile)
 
   return (
     <div
@@ -86,10 +88,11 @@ export function ReadmeContent() {
         </h2>
         <div className="space-y-2">
           {readme.navigation.map((item) => (
-            <div
+            <button
               key={item.tab}
-              className="flex items-start gap-3 rounded p-3 transition-colors hover:opacity-75"
-              style={{ backgroundColor: withAlpha(theme.surface, "40") }}
+              onClick={() => openFile(item.tab)}
+              className="flex w-full items-start gap-3 rounded p-3 text-left transition-colors hover:opacity-75"
+              style={{ backgroundColor: withAlpha(theme.surface, "40"), cursor: "pointer" }}
             >
               <span style={{ color: theme.green }} className="mt-1 flex-shrink-0">
                 <Icon name={item.icon} size={18} />
@@ -102,7 +105,7 @@ export function ReadmeContent() {
                   {item.description}
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
