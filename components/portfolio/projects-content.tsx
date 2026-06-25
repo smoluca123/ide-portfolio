@@ -208,19 +208,38 @@ function ProjectDetail({ project, onBack }: { project: Project; onBack: () => vo
         </Section>
       )}
 
+
       {/* Links */}
       <div className="mt-8 flex flex-wrap gap-3">
-        <a
-          href={project.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackProjectLink(project.id, "github")}
-          className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-80"
-          style={{ borderColor: theme.border, color: theme.foreground }}
-        >
-          <Github size={14} />
-          <span>View Code</span>
-        </a>
+        {/* GitHub repo links — supports single string or multiple { label, url } entries */}
+        {Array.isArray(project.githubUrl) ? (
+          project.githubUrl.map((repo) => (
+            <a
+              key={repo.url + repo.label}
+              href={repo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackProjectLink(project.id, "github")}
+              className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-80"
+              style={{ borderColor: theme.border, color: theme.foreground }}
+            >
+              <Github size={14} />
+              <span>{repo.label}</span>
+            </a>
+          ))
+        ) : (
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackProjectLink(project.id, "github")}
+            className="inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-xs font-semibold transition-opacity hover:opacity-80"
+            style={{ borderColor: theme.border, color: theme.foreground }}
+          >
+            <Github size={14} />
+            <span>View Code</span>
+          </a>
+        )}
         <a
           href={project.liveUrl}
           target="_blank"

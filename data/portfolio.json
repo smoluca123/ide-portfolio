@@ -190,7 +190,16 @@
         "Socket.IO",
         "Swagger"
       ],
-      "githubUrl": "https://github.com/smoluca123",
+      "githubUrl": [
+        {
+          "label": "Frontend",
+          "url": "https://github.com/smoluca123/SMOSpace_ReactJS"
+        },
+        {
+          "label": "Backend",
+          "url": "https://github.com/smoluca123/SMOSpace_NestJS"
+        }
+      ],
       "liveUrl": "https://smospace.lmtblog.com/",
       "thumbnail": "Social network feed with posts, likes, real-time chat, and nested comment interactions",
       "year": "2024",
@@ -243,7 +252,16 @@
         "Mailtrap",
         "Bun"
       ],
-      "githubUrl": "https://github.com/smoluca123",
+      "githubUrl": [
+        {
+          "label": "Frontend",
+          "url": "https://github.com/smoluca123/LingBeauty_NextJS"
+        },
+        {
+          "label": "Backend",
+          "url": "https://github.com/smoluca123/LingBeauty_NestJS"
+        }
+      ],
       "liveUrl": "https://beauty.lingdethuong.com",
       "thumbnail": "E-commerce product showcase and checkout flow",
       "year": "2026",
@@ -299,7 +317,16 @@
         "Swagger",
         "Bun"
       ],
-      "githubUrl": "https://github.com/smoluca123",
+      "githubUrl": [
+        {
+          "label": "Frontend",
+          "url": "https://github.com/smoluca123/SMODrive_NextJS"
+        },
+        {
+          "label": "Backend",
+          "url": "https://github.com/smoluca123/SMODrive_NestJS"
+        }
+      ],
       "liveUrl": "#",
       "thumbnail": "Cloud storage dashboard with file explorer, upload progress, and storage analytics",
       "year": "2025",
@@ -339,8 +366,13 @@
         "Shadcn/ui",
         "Zustand"
       ],
-      "githubUrl": "https://github.com/smoluca123",
-      "liveUrl": "https://paindev.net",
+      "githubUrl": [
+        {
+          "label": "Source",
+          "url": "https://github.com/smoluca123/ide-portfolio"
+        }
+      ],
+      "liveUrl": "https://lucadev.lingdethuong.com",
       "thumbnail": "IDE-style portfolio with file explorer and tabbed editor interface",
       "year": "2025",
       "role": "Solo Developer",

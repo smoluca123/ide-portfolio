@@ -102,7 +102,7 @@ export interface Project {
   description: string
   problemSolved: string
   techStack: string[]
-  githubUrl: string
+  githubUrl: string | Array<{ label: string; url: string }>
   liveUrl: string
   thumbnail: string
   /** --- Optional case-study fields (used by the project detail view) --- */
