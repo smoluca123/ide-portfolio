@@ -409,10 +409,13 @@
           { "name": "Next.js", "percentage": 85, "color": "accent" },
           { "name": "Tailwind CSS", "percentage": 90, "color": "cyan" },
           { "name": "Shadcn/ui", "percentage": 82, "color": "purple" },
-          { "name": "Styled Components", "percentage": 78, "color": "pink" },
-          { "name": "Redux", "percentage": 78, "color": "purple" },
+
+          { "name": "Redux Toolkit", "percentage": 80, "color": "purple" },
           { "name": "Zustand", "percentage": 82, "color": "orange" },
-          { "name": "React Query", "percentage": 80, "color": "red" }
+          { "name": "TanStack Query", "percentage": 82, "color": "red" },
+          { "name": "React Hook Form", "percentage": 82, "color": "pink" },
+          { "name": "Zod", "percentage": 80, "color": "accent" },
+          { "name": "Framer Motion", "percentage": 75, "color": "pink" }
         ]
       },
       {
@@ -421,14 +424,16 @@
           { "name": "Node.js", "percentage": 85, "color": "green" },
           { "name": "Express.js", "percentage": 82, "color": "yellow" },
           { "name": "NestJS", "percentage": 80, "color": "red" },
-          { "name": "Prisma ORM", "percentage": 80, "color": "accent" }
+          { "name": "Prisma ORM", "percentage": 80, "color": "accent" },
+          { "name": "Socket.IO", "percentage": 75, "color": "green" }
         ]
       },
       {
         "title": "DATABASES",
         "skills": [
           { "name": "PostgreSQL", "percentage": 82, "color": "cyan" },
-          { "name": "MySQL", "percentage": 78, "color": "orange" }
+          { "name": "MySQL", "percentage": 78, "color": "orange" },
+          { "name": "Redis", "percentage": 75, "color": "red" }
         ]
       },
       {
@@ -445,6 +450,7 @@
         "skills": [
           { "name": "Git", "percentage": 88, "color": "orange" },
           { "name": "NPM", "percentage": 88, "color": "red" },
+          { "name": "Vite", "percentage": 80, "color": "yellow" },
           { "name": "Prettier", "percentage": 90, "color": "green" },
           { "name": "VS Code", "percentage": 92, "color": "accent" }
         ]
